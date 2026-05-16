@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>IF題庫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+:root{--b:#000;--s:#121212;--sl:#1e1e1e;--p:#fff;--a:#3b82f6;--tp:#fff;--ts:#888;--bc:#2a2a2a;--dc:#ef4444;--wc:#eab308;--ap:20px;--rl:20px;--rm:12px;--rs:8px}*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}body{font-family:'Noto Sans TC',sans-serif;background-color:var(--b);color:var(--tp);line-height:1.5;overflow:hidden;height:100vh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}.hidden{display:none!important}.meta-pill{display:inline-flex;align-items:center;background:0 0;margin-bottom:20px}.meta-type{background:var(--a);color:#fff;padding:4px 10px;border-radius:8px;font-size:.8rem;font-weight:700;margin-right:12px}.meta-info{font-size:1.1rem;color:#7d899a;font-weight:700}.meta-info span{margin:0 8px;color:#444}#loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--b);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center}.spinner{width:40px;height:40px;border:3px solid #333;border-top-color:var(--a);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:20px}@keyframes spin{to{transform:rotate(360deg)}}#toast{position:fixed;top:40px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--dc);color:#fff;padding:12px 24px;border-radius:50px;font-size:.95rem;font-weight:700;z-index:10000;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 10px 20px rgba(239,68,68,.3)}#toast.show{transform:translateX(-50%) translateY(0)}#login-view{position:fixed;inset:0;background:#F7F9FB;display:flex;align-items:center;justify-content:center;z-index:10000;padding:15px}.login-container{width:100%;max-width:360px;padding:35px 25px;background:#FFF;border-radius:30px;box-shadow:0 8px 25px rgba(0,0,0,.04);text-align:center}.login-container h1{font-size:1.8rem;font-weight:800;color:#3182CE;margin-bottom:20px;letter-spacing:-1px}.login-warning{font-size:.82rem;font-weight:700;color:#E53E3E;background:#FFF5F5;border:1px solid #FED7D7;padding:12px 16px;border-radius:16px;margin-bottom:20px;line-height:1.8;text-align:center;width:100%}.login-input{width:100%;padding:14px;border-radius:14px;border:2px solid #EDF2F7;background:#FFF;font-size:1rem;text-align:center;margin-bottom:15px;outline:0}.login-btn{width:100%;padding:15px;border-radius:16px;border:none;background:#3182CE;color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;margin-bottom:15px}.login-quote{color:#999;font-size:.9rem;margin-bottom:10px}#dashboard-view{flex:1;overflow-y:auto;padding:var(--ap);padding-top:calc(var(--ap) + env(safe-area-inset-top))}.dash-header{margin:20px 0 30px;text-align:center}.dash-header h2{font-size:2rem;font-weight:900;color:var(--a)}.id-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;padding-bottom:40px}.id-card{background:var(--s);border:1px solid var(--bc);padding:24px 10px;border-radius:var(--rl);text-align:center;cursor:pointer}.id-card h3{color:#fff;font-size:1.6rem;font-family:'JetBrains Mono';margin-bottom:4px}.id-card p{color:#555;font-size:.8rem}#practice-view{display:flex;flex-direction:column;height:100vh;padding-top:env(safe-area-inset-top)}.subject-nav-wrapper{position:relative;display:flex;align-items:center;background:#0a0a0a;padding:12px 10px;border-top:1px solid #1a1a1a}.nav-arrow{background:#222;color:#fff;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;z-index:2}.subject-scroll{flex:1;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 10px;scroll-behavior:smooth}.subject-scroll::-webkit-scrollbar{display:none}.chip{padding:8px 16px;background:#1a1a1a;color:#666;border-radius:10px;white-space:nowrap;font-size:.9rem;font-weight:700;border:1px solid #222}.chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}.q-content{flex:1;padding:24px var(--ap);overflow-y:auto;display:flex;flex-direction:column}.q-title{font-size:1.45rem;font-weight:700;margin-bottom:25px;line-height:1.5;color:#fff}.label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.7rem;color:#555;font-weight:800;letter-spacing:1px}.answer-area{margin-bottom:30px}.answer-textarea{width:100%;min-height:100px;background:0 0;border:none;border-bottom:1px solid #222;color:var(--tp);font-size:1.1rem;line-height:1.6;padding:8px 0;resize:none;outline:0}.reference-box{background:#111;border-radius:20px;padding:20px;margin-top:20px;border:1px solid #222;display:none;margin-bottom:40px}.reference-box.show{display:block;animation:fadeInUp .4s ease}.ref-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.ref-title{color:#eab308;font-weight:800;font-size:.85rem;letter-spacing:1px}.ref-close{color:#555;font-size:.8rem;font-weight:700}.ref-body{font-size:1.1rem;line-height:1.6;color:#eee;white-space:pre-wrap}@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}.bottom-bar{padding:12px var(--ap);background:#000;display:flex;gap:12px;align-items:center}.ctrl-btn{height:60px;border-radius:18px;font-size:1.1rem;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}.btn-submit{flex:1;background:#fff;color:#000}.btn-next{flex:1;background:#262626;color:#fff}.btn-submit:active,.btn-next:active{transform:scale(.96)}.status-footer{padding:0 var(--ap) 12px;display:flex;justify-content:space-between;align-items:center;background:#000}.progress-tag{font-family:'JetBrains Mono';color:#444;font-size:.85rem;font-weight:700}.footer-icons{display:flex;gap:24px;color:#555;font-size:1.1rem}.footer-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}.footer-item span{font-size:.6rem;font-weight:700}
+</style>
+</head>
+<body>
+<div id="loading-overlay"><div class="spinner"></div><p id="loading-text" style="color:#444;font-size:.9rem;font-weight:700;letter-spacing:1px">找題目中...</p></div>
+<div id="toast"></div>
+<div id="login-view">
+<div class="login-container">
+<h1>海巡簡答申論練習庫</h1>
+<div class="login-warning">⚠️ 此系統為學員自主開發，非官方正式軟體。<br>內容以官方教材為準，僅供練習使用。</div>
+<input type="password" id="pw-input" class="login-input" placeholder="請輸入 114-2 海巡密碼" inputmode="numeric">
+<button class="login-btn" onclick="_U.L()">開啟知識大門</button>
+<p class="login-quote" id="login-quote">題目看懂了，但人生還沒看懂。</p>
+<p style="font-size:.7rem;color:#ccc">2026/05/10 更新</p>
+</div>
+</div>
+<div id="dashboard-view" class="hidden">
+<div class="dash-header"><h2>題庫分類</h2><p style="color:#444;font-size:.85rem;font-weight:700">選擇自己的學號區段</p></div>
+<div class="id-grid" id="id-grid-container"></div>
+</div>
+<div id="practice-view" class="hidden">
+<div class="q-content" id="q-scroll-area">
+<div class="meta-pill"><div class="meta-type" id="q-type-label">簡答</div><div class="meta-info"><span id="q-row-label">#000</span><span style="color:#222">|</span><span id="q-subject-label">載入中</span></div></div>
+<div class="q-title" id="q-text">正在準備題目內容...</div>
+<div class="answer-area">
+<div class="label-row"><span>PRACTICE INPUT</span><span id="char-count">0 CHARACTERS</span></div>
+<textarea class="answer-textarea" id="user-input" placeholder="請在此輸入默寫..." oninput="_U.UC()"></textarea>
+</div>
+<div class="reference-box" id="ref-box">
+<div class="ref-header"><span class="ref-title">標準答案 REFERENCE</span><span class="ref-close" onclick="_U.TA()">收合答案</span></div>
+<div class="ref-body" id="ref-text"></div>
+</div>
+</div>
+<div class="subject-nav-wrapper">
+<button class="nav-arrow" onclick="_U.SS(-100)"><i class="fa-solid fa-caret-left"></i></button>
+<div class="subject-scroll" id="subject-chips"></div>
+<button class="nav-arrow" onclick="_U.SS(100)"><i class="fa-solid fa-caret-right"></i></button>
+</div>
+<div class="bottom-bar">
+<button class="ctrl-btn btn-submit" id="main-action-btn" onclick="_U.TA()">偷看答案</button>
+<button class="ctrl-btn btn-next" onclick="_U.NQ()">下一題</button>
+</div>
+<div class="status-footer">
+<div class="progress-tag" id="progress-text">Q. 000 / 000</div>
+<div class="footer-icons">
+<div class="footer-item" onclick="_U.TRM()"><i class="fa-solid fa-shuffle" id="shuffle-icon" style="color:#3b82f6"></i><span id="mode-text">隨機</span></div>
+<div class="footer-item" onclick="_U.SV('dashboard-view')"><i class="fa-solid fa-bars-staggered"></i><span>選題</span></div>
+<div class="footer-item" onclick="location.reload()"><i class="fa-solid fa-right-from-bracket"></i><span>登出</span></div>
+</div>
+</div>
+</div>
+<script>
+const _U = (function() {
+    const _A = "https://script.google.com/macros/s/AKfycbzx7nAmrTC_aIzEbBn7XYq5POTFoqNAGDH84RF4Pw-sE7x6glGzC-6Nm7vrITVzQBX_/exec";
+    let _S = { aq: [], gd: {}, ci: "", cs: "全部", fq: [], cx: 0, ir: true, qs: [], cli: { ip: null, ua: navigator.userAgent, sw: window.screen.width, sh: window.screen.height } };
+    
+    const _fI = async () => { try { const r = await fetch('https://api.ipify.org?format=json'); const d = await r.json(); _S.cli.ip = d.ip; } catch (e) { _S.cli.ip = "F-F"; } };
+    const _gU = (p) => { const u = new URL(_A); Object.keys(p).forEach(k => u.searchParams.append(k, p[k])); u.searchParams.append("ip", _S.cli.ip || "W"); u.searchParams.append("ua", _S.cli.ua); u.searchParams.append("sw", _S.cli.sw); u.searchParams.append("sh", _S.cli.sh); return u.toString(); };
+    const _sT = (m, e = true) => { const t = document.getElementById('toast'); t.innerText = m; t.style.background = e ? 'var(--dc)' : 'var(--a)'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); };
+    const _sL = (s) => { document.getElementById('loading-overlay').classList.toggle('hidden', !s); };
+    const _sV = (i) => { ['login-view', 'dashboard-view', 'practice-view'].forEach(v => document.getElementById(v).classList.add('hidden')); document.getElementById(i).classList.remove('hidden'); };
+
+    const _rQ = () => {
+        const q = _S.fq[_S.cx]; if (!q) return;
+        gsap.fromTo("#q-text", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 });
+        document.getElementById('q-row-label').innerText = `#${String(q.row).padStart(3, '0')}`;
+        document.getElementById('q-subject-label').innerText = q.subject;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('ref-text').innerText = q.ans;
+        document.getElementById('user-input').value = "";
+        _uC(); _hAO();
+        document.getElementById('progress-text').innerText = `Q. ${_S.cx + 1} / ${_S.fq.length}`;
+        document.getElementById('q-scroll-area').scrollTo({top: 0, behavior: 'smooth'});
+    };
+
+    const _hAO = () => {
+        document.getElementById('ref-box').classList.remove('show');
+        const b = document.getElementById('main-action-btn');
+        b.innerText = "偷看答案"; b.style.background = "#fff";
+    };
+
+    const _uC = () => { document.getElementById('char-count').innerText = `${document.getElementById('user-input').value.length} CHARACTERS`; };
+
+    const _aF = () => {
+        let l = _S.gd[_S.ci].filter(q => _S.cs === "全部" || q.subject === _S.cs);
+        _S.fq = _S.ir ? [...l].sort(() => Math.random() - 0.5) : [...l];
+        _S.cx = 0; _rQ();
+    };
+
+    return {
+        L: async () => {
+            const p = document.getElementById('pw-input').value.trim();
+            const b = document.querySelector('.login-btn');
+            if (!p) return _sT("請輸入密碼");
+            b.disabled = true; b.innerText = "驗證中...";
+            if (!_S.cli.ip) { _sL(true); let r = 0; while (!_S.cli.ip && r < 20) { await new Promise(x => setTimeout(x, 100)); r++; } }
+            _sL(true); document.getElementById('loading-text').innerText = "驗證身分中...";
+            try {
+                const a = await fetch(_gU({ type: 'checkAuth', pw: p, user: "B海湖簡答題" })).then(r => r.json());
+                if (a && a.auth) {
+                    const d = await fetch(_gU({ type: 'getQuestions', sheet: '簡答申論題', user: "B海湖簡答題" })).then(r => r.json());
+                    if (!d || d.length === 0) { _sL(false); return _sT("目前沒有題目資料"); }
+                    _S.aq = d.map((q, i) => ({ id: q.id ? String(q.id).trim() : "未歸類", subject: String(q.subject || "一般").trim(), q: String(q.question || "").trim(), ans: String(q.answer || "").trim(), row: q.row || (i + 2) }));
+                    _S.gd = {}; _S.aq.forEach(q => { if (!_S.gd[q.id]) _S.gd[q.id] = []; _S.gd[q.id].push(q); });
+                    const c = document.getElementById('id-grid-container'); c.innerHTML = "";
+                    Object.keys(_S.gd).sort((a, b) => a === "未歸類" ? 1 : b === "未歸類" ? -1 : Number(a) - Number(b)).forEach(i => {
+                        const d = document.createElement('div'); d.className = 'id-card'; d.innerHTML = `<h3>${i}</h3><p>${_S.gd[i].length} 題目</p>`;
+                        d.onclick = () => {
+                            _S.ci = i; _S.cs = "全部";
+                            const sb = ["全部", ...new Set(_S.gd[i].map(x => x.subject))];
+                            const cc = document.getElementById('subject-chips'); cc.innerHTML = "";
+                            sb.forEach(s => {
+                                const btn = document.createElement('button'); btn.className = `chip ${s === "全部" ? 'active' : ''}`; btn.innerText = s;
+                                btn.onclick = () => { document.querySelectorAll('.chip').forEach(x => x.classList.remove('active')); btn.classList.add('active'); _S.cs = s; _aF(); };
+                                cc.appendChild(btn);
+                            });
+                            _aF(); _sV('practice-view');
+                        };
+                        c.appendChild(d);
+                    });
+                    _sV('dashboard-view'); _sL(false);
+                } else { _sL(false); b.disabled = false; b.innerText = "開啟知識大門"; _sT("密碼錯誤"); }
+            } catch (e) { _sL(false); b.disabled = false; b.innerText = "開啟知識大門"; _sT("連線異常"); }
+        },
+        TA: () => {
+            const x = document.getElementById('ref-box'), b = document.getElementById('main-action-btn');
+            if (x.classList.contains('show')) { _hAO(); } else { x.classList.add('show'); b.innerText = "收合解答"; b.style.background = "var(--wc)"; setTimeout(() => { document.getElementById('q-scroll-area').scrollTo({top: 1000, behavior: 'smooth'}); }, 100); }
+        },
+        NQ: () => { if (_S.cx < _S.fq.length - 1) { _S.cx++; _rQ(); } else { _sT("已完成本分類所有題目", false); } },
+        TRM: () => { _S.ir = !_S.ir; document.getElementById('shuffle-icon').style.color = _S.ir ? '#3b82f6' : '#555'; document.getElementById('mode-text').innerText = _S.ir ? "隨機" : "循序"; _sT(_S.ir ? "已開啟隨機出題" : "已切換為循序出題", false); _aF(); },
+        SS: (v) => { document.getElementById('subject-chips').scrollBy({ left: v, behavior: 'smooth' }); },
+        UC: _uC, SV: _sV,
+        init: async () => {
+            _fI(); fetch(`${_A}?type=getQuotes`).then(r => r.json()).then(r => { if (r && r.LOGIN_QUOTES) { _S.qs = r.LOGIN_QUOTES; document.getElementById('login-quote').innerText = `「${_S.qs[Math.floor(Math.random() * _S.qs.length)]}」`; } });
+            _sL(false);
+        }
+    };
+})();
+window.onload = _U.init;
+</script>
+</body>
+</html>

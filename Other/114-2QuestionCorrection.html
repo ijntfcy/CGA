@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題回報</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+TC:wght@400;700&display=swap');
+    body{font-family:'Inter','Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);color:#1e293b;min-height:100vh;display:flex;align-items:center;justify-content:center}
+    ._0x1a2b{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);max-width:500px;width:90%;padding:40px;border-radius:24px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.3)}
+    ._0x3c4d{width:100%;background:#f1f5f9;border:2px solid transparent;border-radius:12px;padding:12px 16px;font-size:1rem;transition:all .3s cubic-bezier(0.4,0,0.2,1);margin-top:6px}
+    ._0x3c4d:focus{background:#fff;border-color:#334155;box-shadow:0 0 0 4px rgba(51,65,85,0.1);outline:none}
+    ._0x5e6f{background:#1e293b;color:#fff;width:100%;padding:14px;border-radius:12px;font-weight:600;letter-spacing:.05em;transition:all .3s;margin-top:20px}
+    ._0x5e6f:hover{background:#334155;transform:translateY(-2px);box-shadow:0 10px 20px -5px rgba(30,41,59,0.3)}
+    ._0x5e6f:active{transform:translateY(0)}
+    ._0x5e6f:disabled{background:#94a3b8;cursor:not-allowed;transform:none}
+    ._0x7g8h{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:600;background:#f1f5f9;color:#475569;margin-bottom:16px;border:1px solid #e2e8f0}
+  </style>
+</head>
+<body class="p-6">
+  <div class="_0x1a2b">
+    <div class="_0x7g8h">海巡 114-2專</div>
+    <h1 class="text-2xl font-bold mb-2 tracking-tight text-slate-900">勘誤回報</h1>
+    <p class="text-slate-500 mb-8 text-sm">必填部分若不知道填什麼可填無</p>
+    <form id="_0x9i0j" class="space-y-5">
+      <div>
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">回報人員</label>
+        <input type="text" name="_0x11aa" value="神秘人" required class="_0x3c4d" placeholder="請輸入姓名或學號">
+      </div>
+      <div>
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">類別</label>
+        <input type="text" name="_0x22bb" value="不知道"  required class="_0x3c4d" placeholder="如：使用問題、增加功能、移除功能">
+      </div>
+      <div>
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">題目狀況</label>
+        <textarea name="_0x33cc" rows="3" required class="_0x3c4d" placeholder="請完整貼上或描述題目內容..."></textarea>
+      </div>
+      <div>
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">建議修正內容</label>
+        <textarea name="_0x44dd" rows="3" class="_0x3c4d" placeholder="請提供正確之解答或修正建議..."></textarea>
+      </div>
+      <button type="submit" id="_0xkkll" class="_0x5e6f">提交回報</button>
+      <div id="_0xmmnn" class="mt-4 text-center text-sm font-medium hidden"></div>
+    </form>
+    <div class="mt-10 pt-6 border-t border-slate-100 text-center">
+      <p class="text-[10px] text-slate-400 uppercase tracking-[0.2em]">CGA 114-2 2026.05.09</p>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const _0x_a = document.getElementById('_0x9i0j');
+      const _0x_b = document.getElementById('_0xkkll');
+      const _0x_c = document.getElementById('_0xmmnn');
+      const _0x_d = (function(_0x_z){
+        return atob(_0x_z);
+      })("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5RDYpOUhkZzJlWFVjV25Memxzc1c5MVlsWUVwYVM3YmxtS3Fxai0zMThHblJ5R3NhTjRLZHFUMXhsNFg3X3MyTWlRL2V4ZWM=");
+      
+      const _0x_e = "https://script.google.com/macros/s/AKfycbyD6P9Hdg2eXUcWnLzlssW91YUlYEpaS7blmkKqj-318GnRyGsaN4KdqT1xl4X7_s2MiQ/exec";
+
+      function _0x_f() {
+        _0x_c.innerText = "回報成功，已收到您的建議。";
+        _0x_c.className = "mt-6 text-center text-sm font-bold text-slate-600";
+        _0x_c.classList.remove('hidden');
+        _0x_a.reset();
+        _0x_b.innerText = '提交完成';
+        setTimeout(() => {
+          _0x_b.disabled = !1;
+          _0x_b.innerText = '提交回報';
+          _0x_c.classList.add('hidden');
+        }, 3000);
+      }
+
+      function _0x_g(_0x_h) {
+        _0x_c.innerText = "連線失敗，請檢查網路狀態或聯繫管理員。";
+        _0x_c.className = "mt-6 text-center text-sm font-bold text-rose-600";
+        _0x_c.classList.remove('hidden');
+        _0x_b.disabled = !1;
+        _0x_b.innerText = '重新嘗試';
+      }
+
+      _0x_a.onsubmit = function(_0x_i) {
+        _0x_i.preventDefault();
+        _0x_b.disabled = !0;
+        _0x_b.innerText = '資料傳送中...';
+        
+        const _0x_j = {
+          userId: _0x_a._0x11aa.value,
+          errorType: _0x_a._0x22bb.value,
+          questionContent: _0x_a._0x33cc.value,
+          suggestion: _0x_a._0x44dd.value
+        };
+
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+          google.script.run.withSuccessHandler(_0x_f).withFailureHandler(_0x_g).processForm(_0x_j);
+        } else {
+          const _0x_k = new FormData();
+          for (const _0x_l in _0x_j) { _0x_k.append(_0x_l, _0x_j[_0x_l]); }
+          fetch(_0x_e, {
+            method: 'POST',
+            body: new URLSearchParams(_0x_k),
+            mode: 'no-cors'
+          }).then(() => _0x_f()).catch(_0x_m => _0x_g(_0x_m));
+        }
+      };
+    })();
+  </script>
+</body>
+</html>

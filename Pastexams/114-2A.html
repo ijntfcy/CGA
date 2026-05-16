@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>IF題庫</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --_O0x1: #3182CE;
+            --_O0x2: #F8FAFC;
+            --_O0x3: #F5F0E8;
+            --_O0x4: #2D241E;
+            --_O0x5: #FFFDF9;
+            --_O0x6: #ED8936;
+            --_O0x7: #3182CE;
+            --_O0x8: #9F7AEA;
+            --_O0x9: #E53E3E;
+            --_O0xA: #38B2AC;
+            --_O0xB: env(safe-area-inset-top);
+            --_O0xC: env(safe-area-inset-bottom);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Inter', "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: var(--_O0x2);
+            color: #1A202C;
+            -webkit-text-size-adjust: none;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: opacity 0.2s ease;
+            scroll-behavior: smooth;
+        }
+
+        body._O0xD { background: #FFFFFF !important; opacity: 0 !important; pointer-events: none !important; }
+        body._O0xE { background: var(--_O0x3); }
+
+        #_O0xF {
+            position: fixed; inset: 0; background: #F7F9FB;
+            display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 15px;
+        }
+        ._O0x10 {
+            width: 100%; max-width: 360px; padding: 35px 25px;
+            background: #FFFFFF; border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04); text-align: center;
+        }
+        ._O0x11 { font-size: 1.8rem; font-weight: 800; color: var(--_O0x1); margin-bottom: 20px; letter-spacing: -1px; }
+        ._O0x12 {
+            font-size: 0.82rem; font-weight: 700; color: #E53E3E; background: #FFF5F5;
+            border: 1px solid #FED7D7; padding: 12px 16px; border-radius: 16px;
+            margin-bottom: 20px; line-height: 1.8; text-align: center; width: 100%;
+        }
+        ._O0x13 input {
+            width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #EDF2F7;
+            background: #FFFFFF; font-size: 1rem; text-align: center; margin-bottom: 15px; outline: none;
+            transition: all 0.3s ease;
+        }
+        ._O0x13 input._O0x14 { border-color: var(--_O0x9); background-color: #FFF5F5; animation: _O0x15 0.4s ease-in-out; }
+
+        @keyframes _O0x15 {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        ._O0x16 {
+            width: 100%; padding: 15px; border-radius: 16px; border: none;
+            background: var(--_O0x1); color: #fff; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            margin-bottom: 15px;
+        }
+        ._O0x17 { font-size: 0.8rem; color: #A0AEC0; }
+        #_O0x18 { min-height: 1.2em; font-weight: 600; transition: all 0.5s ease; opacity: 1; }
+        #_O0x18._O0x19 { opacity: 0; transform: translateY(5px); }
+        #_O0x18._O0x1A { color: var(--_O0x9); }
+        ._O0x1B { font-size: 0.65rem; color: #CBD5E0; margin-top: 10px; font-family: monospace; }
+
+        #_O0x1C {
+            display: none; opacity: 0; max-width: 500px; margin: 0 auto;
+            padding: calc(8px + var(--_O0xB)) 12px calc(20px + var(--_O0xC));
+        }
+
+        ._O0x1D {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.05); padding: 8px; border-radius: 14px; margin-bottom: 10px;
+            gap: 8px; border: 1px solid #E2E8F0;
+        }
+        
+        ._O0x1E { display: flex; align-items: center; gap: 4px; background: rgba(0,0,0,0.03); padding: 4px; border-radius: 12px; }
+        ._O0x1F {
+            width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+            background: white; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.6rem; cursor: pointer; flex-shrink: 0;
+        }
+
+        ._O0x20 { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; scroll-behavior: smooth; flex: 1; }
+        ._O0x20::-webkit-scrollbar { display: none; }
+
+        ._O0x21 { 
+            padding: 8px 16px; font-size: 0.8rem; font-weight: 800; border: none; 
+            background: rgba(0,0,0,0.05); border-radius: 10px; color: #718096; 
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        ._O0x21._O0x22 { background: white; color: var(--_O0x4); box-shadow: 0 2px 5px rgba(0,0,0,0.08); border: 1px solid #E2E8F0; }
+
+        ._O0x23 { display: flex; align-items: center; gap: 10px; padding-right: 4px; }
+        ._O0x24 {
+            padding: 6px 10px; background: white; border: 1px solid #E2E8F0; border-radius: 10px;
+            font-size: 0.7rem; font-weight: 800; color: var(--_O0x1); text-decoration: none;
+            display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        ._O0x25 { display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; scroll-behavior: smooth; width: 100%; }
+        ._O0x25::-webkit-scrollbar { display: none; }
+        ._O0x26 { display: flex; gap: 5px; flex-shrink: 0; }
+        ._O0x27 {
+            padding: 5px 12px; background: white; border: 1.5px solid #E2E8F0; border-radius: 8px;
+            font-size: 0.75rem; font-weight: 800; color: #4A5568; text-decoration: none;
+            display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); flex-shrink: 0;
+            white-space: nowrap; transition: 0.2s; cursor: pointer;
+            user-select: none;
+        }
+        ._O0x27:hover { border-color: var(--_O0x1); color: var(--_O0x1); }
+
+        ._O0x28 {
+            position: relative;
+            display: inline-block;
+        }
+        ._O0x29 {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.15);
+            z-index: 10000;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        ._O0x29._O0x2A {
+            display: block;
+        }
+        ._O0x29 a {
+            color: #4A5568;
+            padding: 14px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid #F7FAFC;
+        }
+        ._O0x29 a:last-child { border-bottom: none; }
+        ._O0x29 a:hover, ._O0x29 a:active { background-color: #EDF2F7; color: var(--_O0x1); }
+
+        ._O0x2B { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+        
+        ._O0x2C { white-space: nowrap; padding: 6px 14px; border-radius: 8px; border: none; background: rgba(0,0,0,0.05); color: #718096; font-size: 0.75rem; font-weight: 700; }
+        ._O0x2C._O0x22 { background: var(--_O0x1); color: white; }
+
+        ._O0x2D { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 0 4px; }
+        ._O0x2E { display: flex; justify-content: space-between; align-items: center; }
+        ._O0x2F { font-size: 0.75rem; color: #718096; font-weight: 800; display: flex; align-items: center; gap: 4px; }
+        ._O0x30 { display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(0,0,0,0.03); padding: 6px; border-radius: 12px; }
+        ._O0x31 { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+        ._O0x32 { font-size: 0.55rem; color: #A0AEC0; font-weight: 800; }
+        ._O0x33 { font-size: 0.8rem; font-weight: 900; color: var(--_O0x4); font-family: monospace; }
+        ._O0x34 { background: var(--_O0x4); color: white; padding: 5px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: 900; min-width: 80px; text-align: center; }
+        
+        ._O0x35 { display: flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; color: #4A5568; }
+        ._O0x36 { position: relative; display: inline-block; width: 28px; height: 16px; }
+        ._O0x36 input { opacity: 0; width: 0; height: 0; }
+        ._O0x37 { position: absolute; cursor: pointer; inset: 0; background-color: #CBD5E0; transition: .3s; border-radius: 20px; }
+        ._O0x37:before { position: absolute; content: ""; height: 12px; width: 12px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + ._O0x37 { background-color: var(--_O0x1); }
+        input:checked + ._O0x37:before { transform: translateX(12px); }
+
+        ._O0x38 { background: var(--_O0x5); border: 1.5px solid #E2E8F0; padding: 20px; border-radius: 18px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        ._O0x39 { font-size: 1.15rem; line-height: 1.6; font-weight: 800; color: var(--_O0x4); }
+        ._O0x3A { padding: 2px 6px; border-radius: 4px; color: white; font-size: 0.65rem; font-weight: 800; }
+        ._O0x3B { background: var(--_O0x6); }
+        ._O0x3C { background: var(--_O0x7); }
+        ._O0x3D { background: var(--_O0x8); }
+
+        ._O0x3E { display: grid; gap: 8px; }
+        ._O0x3F {
+            background: var(--_O0x5); border: 1.5px solid #E2E8F0;
+            padding: 14px 16px; display: flex; align-items: center;
+            font-size: 1rem; border-radius: 14px; cursor: pointer;
+            transition: 0.2s; color: var(--_O0x4); font-weight: 600;
+        }
+        ._O0x40 {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; background: var(--_O0x1); color: white;
+            border-radius: 50%; margin-right: 12px; font-size: 0.85rem; font-weight: 900;
+        }
+        ._O0x3F._O0x41 { background: #EBF8FF; border: 2px solid var(--_O0x1); }
+        ._O0x3F._O0x42 { background: #E6FFFA !important; border: 2.5px solid var(--_O0xA) !important; } 
+        ._O0x3F._O0x43 { background: transparent !important; border: 2.5px dashed var(--_O0xA) !important; } 
+        ._O0x3F._O0x44 { background: #FFF5F5 !important; border: 2.5px solid var(--_O0x9) !important; } 
+
+        ._O0x45 {
+            margin-top: 12px; padding: 15px; background: #FFF9E6; border-left: 5px solid #F6AD55;
+            font-size: 0.95rem; font-weight: 700; border-radius: 14px; display: none;
+        }
+        ._O0x46 {
+            width: 100%; padding: 16px; background: var(--_O0x4); color: white;
+            border: none; font-size: 1.1rem; font-weight: 800; border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 12px; cursor: pointer;
+            transition: all 0.3s;
+        }
+        ._O0x46:disabled { opacity: 0.5; }
+        ._O0x46._O0x47 { background: var(--_O0x1); transform: scale(1.02); }
+
+        ._O0x48 { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #718096; transition: 0.2s; }
+        ._O0x48 svg { width: 22px; height: 22px; fill: currentColor; }
+
+        #_O0x49 { 
+            display: block; text-align: center; margin-top: 12px; font-size: 0.8rem; color: #A0AEC0; 
+            font-style: italic; min-height: 1.2em; transition: opacity 0.3s ease; 
+        }
+        #_O0x4A {
+            position: fixed; inset: 0; background: rgba(255, 255, 255, 0.9);
+            z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        #_O0x4A._O0x2A { opacity: 1; pointer-events: auto; }
+        ._O0x4B { width: 35px; height: 35px; border: 4px solid #EDF2F7; border-top-color: var(--_O0x1); border-radius: 50%; animation: _O0x4C 1s linear infinite; margin-bottom: 10px; }
+        @keyframes _O0x4C { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body onmousedown="_O0x4D()" onkeydown="_O0x4D()" ontouchstart="_O0x4D()">
+
+    <div id="_O0xF">
+        <div class="_O0x10">
+            <h1 class="_O0x11">海巡學科練習庫</h1>
+            <div class="_O0x12">
+                ⚠️ 此系統為學員自主開發，非官方正式軟體。<br>
+                內容以官方教材為準，僅供練習使用。
+            </div>
+            <div class="_O0x13">
+                <input type="password" id="_O0x4E" placeholder="請輸入114-2海巡密碼" inputmode="numeric" oninput="_O0x4F()">
+            </div>
+            <button class="_O0x16" onclick="_O0x50()">開啟知識大門</button>
+            <div class="_O0x17">
+                <p id="_O0x18">正在調整心情...</p>
+                <div class="_O0x1B" id="_O0x51">IF</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="_O0x1C">
+        <div class="_O0x1D">
+            <div class="_O0x1E" style="flex: 1; overflow: hidden;">
+                <button class="_O0x1F" onclick="_O0x52(-80)">◀</button>
+                <div class="_O0x20" id="_O0x53"></div>
+                <button class="_O0x1F" onclick="_O0x52(80)">▶</button>
+            </div>
+            
+            <div class="_O0x23">
+                <button class="_O0x48" onclick="_O0x54()" title="重新載入題目">
+                    <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                </button>
+                <button class="_O0x48" onclick="_O0x55('主動登出')" title="安全退出">
+                    <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="_O0x2B">
+            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+                <div class="_O0x25" style="flex: 1;">
+                    <div class="_O0x26" id="_O0x56"></div>
+                    
+                    <div style="width: 2px; height: 16px; background: #CBD5E0; flex-shrink: 0; border-radius: 2px; margin: 0 4px;"></div>
+                    <a href="#" id="_O0x57" target="_blank" class="_O0x27" style="display:none;">簡答題</a>
+                    <a href="#" id="_O0x58" target="_blank" class="_O0x27" style="display:none;">問題回報</a>
+                </div>
+                
+                <div class="_O0x28" id="_O0x59">
+                    <div class="_O0x27" onclick="_O0x5A(event)">🔗 題庫 ▼</div>
+                    <div class="_O0x29" id="_O0x5B">
+                        <a href="#" id="_O0x5C" target="_blank" style="line-height: 1.4;">選擇題庫<br>共用申請(學號+姓名)</a>
+                        <a href="#" id="_O0x5D" target="_blank" style="line-height: 1.4;">簡答題庫<br>共用申請(學號+姓名)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="_O0x1E">
+                <button class="_O0x1F" onclick="_O0x5E(-80)">◀</button>
+                <div class="_O0x20" id="_O0x5F"></div>
+                <button class="_O0x1F" onclick="_O0x5E(80)">▶</button>
+            </div>
+        </div>
+
+        <div class="_O0x2D">
+            <div class="_O0x2E">
+                <div class="_O0x2F" id="_O0x60"></div>
+                <div style="display:flex; gap:8px;">
+                    <div class="_O0x35">
+                        <span>隨機出題</span>
+                        <label class="_O0x36"><input type="checkbox" id="_O0x61" checked onchange="_O0x62()"><span class="_O0x37"></span></label>
+                    </div>
+                    <div class="_O0x35">
+                        <span>亂序選項</span>
+                        <label class="_O0x36"><input type="checkbox" id="_O0x63" checked onchange="_O0x64()"><span class="_O0x37"></span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="_O0x30">
+                <div class="_O0x31"><span class="_O0x32">總時數</span><span id="_O0x65" class="_O0x33">00:00</span></div>
+                <div class="_O0x34" id="_O0x66">0 / 0</div>
+                <div class="_O0x31"><span class="_O0x32">本題</span><span id="_O0x67" class="_O0x33">00:00</span></div>
+            </div>
+        </div>
+
+        <div class="_O0x68">
+            <div class="_O0x38" id="_O0x69"><div class="_O0x39" id="_O0x6A">翻箱倒櫃找題目中...</div></div>
+            <div class="_O0x3E" id="_O0x6B"></div>
+            <div class="_O0x45" id="_O0x6C">
+                <span style="color:#C05621">💡 正確答案：</span><span id="_O0x6D" style="color:#2B6CB0; font-weight:900;"></span>
+                <div id="_O0x6E" style="font-size:0.85rem; margin-top:6px; border-top:1px dashed #DDD; padding-top:6px; color:#4A5568;"></div>
+            </div>
+            <button class="_O0x46" id="_O0x6F" disabled>請選擇答案</button>
+            <span id="_O0x49">正在載入靈感...</span>
+        </div>
+    </div>
+
+    <div id="_O0x4A"><div class="_O0x4B"></div><div id="_O0x70" style="font-weight:800; color:var(--_O0x1);">努力加載中...</div></div>
+
+<script>
+    const _O0x71 = {
+        _O0x72: "https://script.google.com/macros/s/AKfycbxwm82CukADyBeojtrhrajO3ufhsNtHtlz3XkUD79bboCpKKtP8SzvNHVkmjyTo3Uzf/exec",
+        _O0x73: "auth_v10_2",
+        _O0x74: 4, 
+        _O0x75: "2026/05/16 03:31 再度爆肝版",
+        _O0x76: "https://docs.google.com/spreadsheets/d/1t_2F7HAbmSkhiNAhPNuv5havthbqnXra3j2QnX2si4M/edit?usp=sharing", 
+        _O0x77: "https://docs.google.com/spreadsheets/d/1qvktUbwDSFs5kpDp2hveOu7WSEsNxN3087xFF6hS_S0/edit?usp=sharing", 
+        _O0x78: "https://ijntfcy.github.io/CGA/Pastexams/114-2B.html", 
+        _O0x79: "https://ijntfcy.github.io/CGA/Other/114-2QuestionCorrection.html" 
+    };
+
+    let _O0x7A = [];
+    let _O0x7B = [];
+    let _O0x7C = [];
+
+    let _O0x7D = [], _O0x7E = [], _O0x7F = 0, _O0x80 = "", _O0x81 = [];
+    let _O0x82 = "全部", _O0x83 = "全部", _O0x84 = 0, _O0x85 = 0, _O0x86 = null;
+    let _O0x87 = "Unknown", _O0x88 = null, _O0x89 = 0;
+    
+    let _O0x8A = null;
+
+    const _O0x8B = {};
+
+    const _O0x8C = () => {
+        return `&ua=${encodeURIComponent(navigator.userAgent)}&sw=${window.screen.width}&sh=${window.screen.height}`;
+    };
+
+    window.onload = async () => { 
+        _O0x8D();
+        _O0x8E();
+        
+        Promise.all([
+            _O0x8F(),
+            _O0x90().catch(() => "Unknown")
+        ]).then(([, _O0x91]) => {
+            _O0x87 = _O0x91;
+        });
+
+        _O0x92();
+
+        if(localStorage.getItem(_O0x71._O0x73) === "true") {
+            _O0x93("正在驗證安全連線...");
+            try {
+                const _O0x94 = await fetch(`${_O0x71._O0x72}?type=checkSession&ip=${_O0x87}${_O0x8C()}`);
+                const _O0x95 = await _O0x94.json();
+                _O0x96();
+                if(_O0x95.valid) {
+                    _O0x71._O0x74 = _O0x95.expireHours;
+                    _O0x97();
+                    _O0x98(); 
+                } else {
+                    localStorage.removeItem(_O0x71._O0x73);
+                    _O0x99("登入時效已過，請重新輸入", true);
+                }
+            } catch(e) { _O0x96(); }
+        }
+    };
+
+    function _O0x9A(_O0x9B) { 
+        for (let i = _O0x9B.length - 1; i > 0; i--) { 
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [_O0x9B[i], _O0x9B[j]] = [_O0x9B[j], _O0x9B[i]]; 
+        } 
+        return _O0x9B; 
+    }
+
+    async function _O0x8F() {
+        try {
+            const _O0x9C = await fetch(`${_O0x71._O0x72}?type=getQuotes`);
+            const _O0x9D = await _O0x9C.json();
+            if (_O0x9D.LOGIN_QUOTES?.length) _O0x7A = _O0x9A(_O0x9D.LOGIN_QUOTES.filter(q => q?.trim()));
+            if (_O0x9D.ERROR_QUOTES?.length) _O0x7B = _O0x9A(_O0x9D.ERROR_QUOTES.filter(q => q?.trim()));
+            if (_O0x9D.HUMOR_QUOTES?.length) _O0x7C = _O0x9A(_O0x9D.HUMOR_QUOTES.filter(q => q?.trim()));
+            if (_O0x7A.length === 0) _O0x7A = ["正在同步雲端語錄..."];
+            if (_O0x7B.length === 0) _O0x7B = ["密碼錯誤，請重新確認。"];
+            if (_O0x7C.length === 0) _O0x7C = ["加油！"];
+        } catch (e) { 
+            _O0x7A = ["離變強又更進一步！"];
+            _O0x7B = ["登入失敗，請確認網路與密碼。"];
+            _O0x7C = ["保持專注！"];
+        }
+    }
+
+    async function _O0x90() {
+        const _O0x9E = await fetch('https://api4.ipify.org?format=json');
+        const _O0x9F = await _O0x9E.json();
+        return _O0x9F.ip;
+    }
+
+    function _O0x8D() {
+        const idMap = {
+            loginScreen: '_O0xF',
+            mainUi: '_O0x1C',
+            pwInput: '_O0x4E',
+            loginHumorText: '_O0x18',
+            optionsGrid: '_O0x6B',
+            actionBtn: '_O0x6F',
+            qMetaInfo: '_O0x60',
+            humorToast: '_O0x49',
+            ansPanel: '_O0x6C',
+            ansIds: '_O0x6D',
+            ansText: '_O0x6E',
+            qText: '_O0x6A',
+            progressText: '_O0x66',
+            totalTimer: '_O0x65',
+            qTimer: '_O0x67',
+            loadingOverlay: '_O0x4A',
+            loadingText: '_O0x70',
+            sheetMiniTabs: '_O0x53',
+            tagFilters: '_O0x5F',
+            typeFilters: '_O0x56',
+            appVersionLabel: '_O0x51',
+            customLinkBtn: '_O0x57',
+            reportLinkBtn: '_O0x58',
+            questionCard: '_O0x69',
+            linkApplyChoice: '_O0x5C',
+            linkApplyShort: '_O0x5D'
+        };
+        for (const key in idMap) {
+            const el = document.getElementById(idMap[key]);
+            if (el) _O0x8B[key] = el;
+        }
+    }
+
+    function _O0x8E() { 
+        _O0x8B.appVersionLabel.innerText = _O0x71._O0x75; 
+        
+        if(_O0x8B.linkApplyChoice) _O0x8B.linkApplyChoice.href = _O0x71._O0x76;
+        if(_O0x8B.linkApplyShort) _O0x8B.linkApplyShort.href = _O0x71._O0x77;
+        
+        if(_O0x71._O0x78 && _O0x8B.customLinkBtn) {
+            _O0x8B.customLinkBtn.href = _O0x71._O0x78;
+            _O0x8B.customLinkBtn.style.display = 'flex';
+        }
+        
+        if(_O0x71._O0x79 && _O0x8B.reportLinkBtn) {
+            _O0x8B.reportLinkBtn.href = _O0x71._O0x79;
+            _O0x8B.reportLinkBtn.style.display = 'flex'; 
+        }
+    }
+
+    function _O0x98() { 
+        setInterval(() => { 
+            if (localStorage.getItem(_O0x71._O0x73) === "true") {
+                const _O0xA4 = localStorage.getItem('loginTimestamp');
+                if (_O0xA4 && (Date.now() - parseInt(_O0xA4, 10) > _O0x71._O0x74 * 3600 * 1000)) _O0x55('時效過期');
+            }
+        }, 30000);
+    }
+
+    function _O0x92() {
+        const _O0xA5 = setInterval(() => {
+            if (_O0x7A.length > 0) {
+                clearInterval(_O0xA5);
+                _O0x89 = 0;
+                _O0x99(_O0x7A[0]);
+                _O0x88 = setInterval(() => {
+                    if(_O0x8B.loginHumorText.classList.contains('_O0x1A')) return;
+                    _O0x89 = (_O0x89 + 1) % _O0x7A.length;
+                    _O0xA6(_O0x7A[_O0x89]);
+                }, 3000);
+            }
+        }, 500);
+    }
+
+    function _O0xA6(_O0xA7) {
+        _O0x8B.loginHumorText.classList.add('_O0x19');
+        setTimeout(() => { _O0x8B.loginHumorText.innerText = _O0xA7; _O0x8B.loginHumorText.classList.remove('_O0x19'); }, 500);
+    }
+
+    function _O0x99(_O0xA8, _O0xA9 = false) {
+        _O0x8B.loginHumorText.innerText = _O0xA8;
+        _O0x8B.loginHumorText.classList.toggle('_O0x1A', _O0xA9);
+    }
+
+    function _O0x4F() { 
+        _O0x8B.pwInput.classList.remove('_O0x14'); 
+        if(_O0x8B.loginHumorText.classList.contains('_O0x1A')) {
+            _O0x99(_O0x7A[_O0x89]);
+        }
+    }
+
+    async function _O0x50() {
+        const _O0xAA = _O0x8B.pwInput.value.trim();
+        if(!_O0xAA) { _O0x8B.pwInput.classList.add('_O0x14'); return; }
+        _O0x93("正在驗證身份...");
+        try {
+            const _O0xAB = await fetch(`${_O0x71._O0x72}?type=checkAuth&pw=${encodeURIComponent(_O0xAA)}&ip=${_O0x87}${_O0x8C()}`);
+            const _O0xAC = await _O0xAB.json();
+            _O0x96();
+            if(_O0xAC.auth) { 
+                localStorage.setItem(_O0x71._O0x73, "true"); 
+                localStorage.setItem('loginTimestamp', Date.now().toString());
+                if(_O0xAC.expireHours) _O0x71._O0x74 = _O0xAC.expireHours;
+                _O0x97(); 
+                _O0x98();
+            } else { 
+                _O0x8B.pwInput.classList.add('_O0x14');
+                const _O0xAD = _O0x7B[Math.floor(Math.random() * _O0x7B.length)];
+                _O0x99(_O0xAD, true);
+            }
+        } catch(e) { _O0x96(); _O0x99("連線發生異常，請稍後再試", true); }
+    }
+
+    function _O0x97() {
+        document.body.classList.add('_O0xE');
+        _O0x8B.loginScreen.style.display = 'none';
+        _O0x8B.mainUi.style.display = 'block';
+        setTimeout(() => _O0x8B.mainUi.style.opacity = '1', 50);
+        _O0xAE();
+    }
+
+    async function _O0xAE() {
+        _O0x93("正在同步雲端題庫...");
+        try {
+            const _O0xAF = await fetch(`${_O0x71._O0x72}?type=listSheets`);
+            _O0x81 = await _O0xAF.json();
+            if (_O0x81.length > 0) {
+                _O0x80 = _O0x81[0];
+                _O0xB0();
+                _O0xB1(_O0x80);
+            }
+        } catch(e) { _O0x96(); }
+    }
+
+    function _O0xB0() {
+        _O0x8B.sheetMiniTabs.innerHTML = _O0x81.map(_O0xB2 => `<button class="_O0x21 ${_O0xB2 === _O0x80 ? '_O0x22' : ''}" onclick="_O0xB3('${_O0xB2}', this)">${_O0xB2}</button>`).join('');
+    }
+
+    async function _O0xB1(_O0xB4) {
+        _O0x80 = _O0xB4;
+        _O0x82 = "全部";
+        _O0xB0();
+        _O0x93(`載入 ${_O0xB4}...`);
+        try {
+            const _O0xB5 = await fetch(`${_O0x71._O0x72}?type=getQuestions&sheet=${encodeURIComponent(_O0xB4)}${_O0x8C()}`);
+            const _O0xB6 = await _O0xB5.json();
+            _O0x7D = _O0xB6.map((_O0xB7, _O0xB8) => {
+                let _O0xB9 = (_O0xB7.ans || "").toString().trim();
+                let _O0xBA = (_O0xB7.opts || []).filter(_O0xBB => _O0xBB !== "");
+                let _O0xBC = "單選";
+                if (_O0xB9.toUpperCase() === "O" || _O0xB9.toUpperCase() === "X") _O0xBC = "是非";
+                else if (_O0xB9.length > 1) _O0xBC = "多選";
+                return { q: _O0xB7.q, ans: _O0xB9, options: _O0xBA, type: _O0xBC, id: _O0xB8 + 1, tag: (_O0xB7.subject || "通用").trim() };
+            }).filter(_O0xBD => _O0xBD.options.length > 0 || _O0xBD.type === "是非"); 
+            _O0xBE(); 
+            _O0xBF();
+            _O0x96();
+            _O0x62();
+        } catch(e) { _O0x96(); _O0x8B.qText.innerText = "載入失敗"; }
+    }
+
+    function _O0xBE() {
+        const _O0xC0 = [...new Set(_O0x7D.map(_O0xC1 => _O0xC1.type))];
+        const _O0xC2 = ["是非", "單選", "多選"]; 
+        let _O0xC3 = `<button class="_O0x2C _O0x22" onclick="_O0xC4('全部', this)">全部</button>`;
+        _O0xC2.forEach(_O0xC5 => { if (_O0xC0.includes(_O0xC5)) _O0xC3 += `<button class="_O0x2C" onclick="_O0xC4('${_O0xC5}', this)">${_O0xC5}</button>`; });
+        _O0x8B.typeFilters.innerHTML = _O0xC3;
+    }
+
+    function _O0xBF() {
+        const _O0xC6 = [...new Set(_O0x7D.map(_O0xC7 => _O0xC7.tag))];
+        _O0x8B.tagFilters.innerHTML = `<button class="_O0x2C _O0x22" onclick="_O0xC8('全部', this)">全部</button>` + _O0xC6.map(_O0xC9 => `<button class="_O0x2C" onclick="_O0xC8('${_O0xC9}', this)">${_O0xC9}</button>`).join('');
+    }
+
+    function _O0xC4(_O0xCA, _O0xCB) { _O0x82 = _O0xCA; _O0xCC('_O0x56', _O0xCB); _O0x62(); }
+    function _O0xC8(_O0xCD, _O0xCE) { _O0x83 = _O0xCD; _O0xCC('_O0x5F', _O0xCE); _O0x62(); }
+    function _O0xCC(_O0xCF, _O0xD0) { document.querySelectorAll(`#${_O0xCF} ._O0x2C`).forEach(_O0xD1 => _O0xD1.classList.remove('_O0x22')); _O0xD0.classList.add('_O0x22'); }
+    function _O0xB3(_O0xD2, _O0xD3) { if(_O0xD2 !== _O0x80) _O0xB1(_O0xD2); }
+
+    function _O0x62() {
+        _O0x7E = _O0x7D.filter(_O0xD4 => (_O0x82 === "全部" || _O0xD4.type === _O0x82) && (_O0x83 === "全部" || _O0xD4.tag === _O0x83));
+        if(document.getElementById('_O0x61').checked) _O0x9A(_O0x7E);
+        _O0x7F = 0; _O0x84 = 0;
+        _O0x64();
+    }
+
+    function _O0xD5() {
+        if (_O0x8B.questionCard) {
+            _O0x8B.questionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function _O0xD6() {
+        _O0xD7();
+        if (_O0x7C.length === 0) return;
+        
+        _O0x8B.humorToast.innerText = _O0x7C[Math.floor(Math.random() * _O0x7C.length)];
+        
+        _O0x8A = setInterval(() => {
+            _O0x8B.humorToast.style.opacity = '0';
+            setTimeout(() => {
+                _O0x8B.humorToast.innerText = _O0x7C[Math.floor(Math.random() * _O0x7C.length)];
+                _O0x8B.humorToast.style.opacity = '1';
+            }, 300);
+        }, 3000);
+    }
+
+    function _O0xD7() {
+        if (_O0x8A) {
+            clearInterval(_O0x8A);
+            _O0x8A = null;
+        }
+    }
+
+    function _O0x64() {
+        _O0xD5();
+
+        _O0x8B.ansPanel.style.display = 'none'; _O0x8B.optionsGrid.innerHTML = ""; 
+        _O0x8B.actionBtn.classList.remove('_O0x47');
+
+        _O0xD6();
+
+        if(!_O0x7E.length) { _O0x8B.qText.innerText = "目前分類下無題目"; return; }
+        if(_O0x7F >= _O0x7E.length) { 
+            _O0x8B.qText.innerText = "練習結束！"; 
+            _O0x8B.actionBtn.innerText = "再練習一次"; _O0x8B.actionBtn.onclick = _O0x62; _O0x8B.actionBtn.disabled = false;
+            _O0xD7();
+            _O0x8B.humorToast.innerText = "棒棒der~";
+            return; 
+        }
+        const _O0xD8 = _O0x7E[_O0x7F];
+        _O0x8B.progressText.innerText = `${_O0x7F + 1} / ${_O0x7E.length}`;
+        let _O0xD9 = _O0xD8.type === "是非" ? "_O0x3B" : (_O0xD8.type === "多選" ? "_O0x3D" : "_O0x3C");
+        _O0x8B.qMetaInfo.innerHTML = `<span class="_O0x3A ${_O0xD9}">${_O0xD8.type}</span> <span style="margin-left:5px;">#${_O0xD8.id} | ${_O0xD8.tag}</span>`;
+        _O0x8B.qText.innerText = _O0xD8.q;
+
+        let _O0xDA = _O0xD8.type === "是非" ? [{v:"O", t:_O0xD8.options[0]||"O"}, {v:"X", t:_O0xD8.options[1]||"X"}] : _O0xD8.options.map((_O0xDB, _O0xDC) => ({ v: (_O0xDC+1).toString(), t: _O0xDB }));
+        if (_O0xD8.type !== "是非" && document.getElementById('_O0x63').checked) _O0x9A(_O0xDA);
+        _O0xDA.forEach((_O0xDD, _O0xDE) => _O0xDD.cur = (_O0xDE + 1).toString());
+        _O0xDA.forEach(_O0xDF => {
+            const _O0xE0 = document.createElement('div');
+            _O0xE0.className = '_O0x3F';
+            _O0xE0.innerHTML = `<span class="_O0x40">${_O0xDF.cur}</span><span>${_O0xDF.t}</span>`;
+            _O0xE0.onclick = () => {
+                _O0xD7();
+                _O0x8B.humorToast.innerText = _O0x7C[Math.floor(Math.random() * _O0x7C.length)];
+                
+                if(_O0xD8.type === "多選") {
+                    _O0xE0.classList.toggle('_O0x41');
+                    _O0x8B.actionBtn.disabled = false; _O0x8B.actionBtn.innerText = "提交多選答案";
+                    _O0x8B.actionBtn.classList.add('_O0x47');
+                    _O0x8B.actionBtn.onclick = () => _O0xE1(_O0xD8, _O0xDA);
+                } else _O0xE1(_O0xD8, _O0xDA, _O0xDF.cur);
+            };
+            _O0x8B.optionsGrid.appendChild(_O0xE0);
+        });
+        _O0x8B.actionBtn.innerText = "請選擇答案"; _O0x8B.actionBtn.disabled = true;
+        
+        _O0x85 = 0; _O0xE2();
+    }
+
+    function _O0xE3() {
+        _O0x8B.actionBtn.disabled = false;
+        _O0x8B.actionBtn.classList.add('_O0x47');
+        setTimeout(() => {
+            _O0x8B.actionBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    }
+
+    function _O0xE1(_O0xE4, _O0xE5, _O0xE6 = null) {
+        clearInterval(_O0x86); 
+        _O0xD7();
+
+        const _O0xE7 = document.querySelectorAll('._O0x3F'); 
+        _O0xE7.forEach(_O0xE8 => _O0xE8.onclick = null);
+        let _O0xE9 = _O0xE4.ans.toString().toUpperCase();
+        let _O0xEA = _O0xE9.replace(/A/g, '1').replace(/B/g, '2').replace(/C/g, '3').replace(/D/g, '4').replace(/E/g, '5');
+        const _O0xEB = _O0xEA.split(""); 
+        let _O0xEC = [];
+        let _O0xED = []; 
+        _O0xE7.forEach((_O0xEE, _O0xEF) => {
+            const _O0xF0 = _O0xE5[_O0xEF];
+            let _O0xF1 = _O0xE4.type === "是非" ? _O0xE9 === _O0xF0.v.toUpperCase() : (_O0xEB.includes(_O0xF0.v) || _O0xE9 === _O0xF0.t.toUpperCase());
+            const _O0xF2 = _O0xEE.classList.contains('_O0x41') || _O0xF0.cur === _O0xE6;
+            if (_O0xF1) { 
+                _O0xEE.classList.add(_O0xF2 ? '_O0x42' : '_O0x43'); 
+                _O0xEC.push(`[${_O0xF0.cur}] ${_O0xF0.t}`); 
+                _O0xED.push(_O0xE4.type === "是非" ? _O0xF0.v : _O0xF0.cur);
+            }
+            else if (_O0xF2) _O0xEE.classList.add('_O0x44');
+        });
+        _O0x8B.ansIds.innerText = _O0xED.length > 0 ? _O0xED.join("") : _O0xE4.ans; 
+        _O0x8B.ansText.innerText = _O0xEC.length > 0 ? _O0xEC.join("；") : "無對應選項";
+        _O0x8B.ansPanel.style.display = 'block'; 
+        
+        _O0x8B.humorToast.innerText = _O0x7C[Math.floor(Math.random() * _O0x7C.length)];
+        
+        _O0x8B.actionBtn.innerText = "下一題"; 
+        _O0x8B.actionBtn.onclick = () => { _O0x7F++; _O0x64(); };
+        _O0xE3();
+    }
+
+    function _O0x5A(_O0xF3) {
+        _O0xF3.stopPropagation(); 
+        const _O0xF4 = document.getElementById('_O0x5B');
+        if(_O0xF4) _O0xF4.classList.toggle('_O0x2A');
+    }
+
+    window.addEventListener('click', function(_O0xF5) {
+        const _O0xF6 = document.getElementById('_O0x5B');
+        if (_O0xF6 && _O0xF6.classList.contains('_O0x2A')) {
+            _O0xF6.classList.remove('_O0x2A');
+        }
+    });
+
+    function _O0x5E(_O0xF7) { _O0x8B.tagFilters.scrollBy({ left: _O0xF7, behavior: 'smooth' }); }
+    function _O0x52(_O0xF8) { _O0x8B.sheetMiniTabs.scrollBy({ left: _O0xF8, behavior: 'smooth' }); }
+    function _O0x93(_O0xF9) { _O0x8B.loadingText.innerText = _O0xF9; _O0x8B.loadingOverlay.classList.add('_O0x2A'); }
+    function _O0x96() { _O0x8B.loadingOverlay.classList.remove('_O0x2A'); }
+    function _O0xE2() { clearInterval(_O0x86); _O0x86 = setInterval(() => { _O0x84++; _O0x85++; _O0x8B.totalTimer.innerText = _O0xFA(_O0x84); _O0x8B.qTimer.innerText = _O0xFA(_O0x85); }, 1000); }
+    function _O0xFA(_O0xFB) { return `${Math.floor(_O0xFB / 60).toString().padStart(2, '0')}:${(_O0xFB % 60).toString().padStart(2, '0')}`; }
+    function _O0x54() { _O0xAE(); }
+    async function _O0x55(_O0xFC = "登出") {
+        document.body.classList.add('_O0xD');
+        localStorage.removeItem(_O0x71._O0x73);
+        try { await fetch(`${_O0x71._O0x72}?type=logout&mode=${_O0xFC}&ip=${_O0x87}${_O0x8C()}`, { mode: 'no-cors' }); } catch(e) {}
+        setTimeout(() => window.location.reload(), 200);
+    }
+    function _O0x4D() {}
+</script>
+</body>
+</html>

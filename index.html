@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>114-2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body{font-family:'Noto Sans TC',sans-serif;background-color:#000;-webkit-tap-highlight-color:transparent;min-height:100vh}
+        #pass-input{-webkit-text-security:disc!important;text-security:disc!important}
+        .event-card{transition:transform .2s ease,box-shadow .2s ease}
+        @media (min-width:768px){.event-card:hover{transform:scale(1.01)}}
+        #login-overlay{background-color:#000}
+        @keyframes _shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+        ._shk_act{animation:_shk .4s ease-in-out 2}
+        ._dsbl_btn{opacity:.5;cursor:not-allowed;pointer-events:none}
+        .photo-container{box-shadow:0 10px 30px -10px rgba(0,0,0,.1)}
+        .clickable-photo{cursor:zoom-in;transition:transform .3s ease}
+        .clickable-photo:hover{transform:scale(1.03)}
+        #_lbx{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.95);z-index:200;justify-content:center;align-items:center;opacity:0;transition:opacity .3s ease}
+        #_lbx.active{display:flex;opacity:1}
+        #_lbx img{max-width:95%;max-height:95%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.5)}
+    </style>
+</head>
+<body class="antialiased text-white">
+    <script>
+        (function(_0x1b,_0x2a){const _0x3c={Y:2026,M:8,D:13,H:9,Min:0};window["CONFIG"]={TARGET:_0x3c,TARGET_LABEL:"距離掛階 (08/13)",FIELD_START:"2026-05-25",FIELD_END:"2026-06-28",
+USER_PHOTO_URL:"./img/cga-photo.jpg",
+RESOURCES:[
+{name:"✅ 選擇練習區",url:"https://ijntfcy.github.io/CGA/Pastexams/114-2A",color:"bg-emerald-600"},
+{name:"✍️ 簡答練習區",url:"https://ijntfcy.github.io/CGA/Pastexams/114-2B",color:"bg-indigo-600"},
+{name:"🏥 教測中心",url:"https://www.facebook.com/cga.gov.tw",color:"bg-rose-600"},
+{name:"⏰ 收假點名",url:"https://ijntfcy.github.io/CGA/Other/114-2RollCall.html",color:"bg-purple-600"},
+{name:"🚩 問題回報區",url:"https://ijntfcy.github.io/CGA/Other/114-2QuestionCorrection",color:"bg-amber-600"},
+{name:"⚖️ 法規庫",url:"https://law.moj.gov.tw/",color:"bg-slate-700"},
+{name:"🌊 海巡署",url:"https://www.cga.gov.tw/",color:"bg-blue-600"},
+{name:"🍱 XXX",url:"https://www.google.com/",color:"bg-orange-500"},
+{name:"📝 XXX",url:"https://www.google.com/",color:"bg-cyan-600"}]};window["_A_B"]="https://script.google.com/macros/s/AKfycbxaDn0tlhPyVDGdp0Fspp87WhpEtcJfmySMYUN5gO8FCbCJeRtjfFjw3zwekXothsf3/exec";window["_C_I"]={ip:"Loading...",ua:navigator.userAgent,sw:screen.width,sh:screen.height};})();
+    </script>
+
+    <div id="_lbx" onclick="_c_lb()">
+        <button class="absolute top-6 right-6 text-white bg-white/10 p-3 rounded-full hover:bg-white/20 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <img id="_lbx_i" src="" alt="Full view" onclick="event.stopPropagation()">
+    </div>
+
+    <div id="_l_o" class="fixed inset-0 z-[100] flex items-center justify-center p-6 overflow-y-auto">
+        <div id="_l_c" class="w-full max-w-md flex flex-col items-center">
+            <img src="https://www.cga.gov.tw/GipOpen/wSite/public/Data/f1433488403280.jpg" alt="CGA Logo" class="w-28 h-28 md:w-32 md:h-32 object-contain mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-white mb-2 text-center">海巡路上睡</h1>
+            <p class="text-slate-500 text-xs md:text-sm mb-8 tracking-widest uppercase">Coast Guard Administration 114-2</p>
+            <div class="border border-orange-900/40 bg-orange-950/10 rounded-2xl p-4 mb-8 text-center max-w-[90%]">
+                <p class="text-orange-500 text-xs md:text-sm leading-relaxed">⚠️ 此系統為學員自主開發，非官方正式軟體。<br>內容以官方教材為準，僅供練習使用。</p>
+            </div>
+            <div class="w-full bg-[#1c1c1e] p-5 md:p-6 rounded-[2.5rem] flex flex-col gap-4 shadow-2xl border border-white/5">
+                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="pass-input" placeholder="請輸入海巡密碼" autocomplete="new-password" class="w-full bg-black text-white p-5 rounded-3xl text-center font-bold text-xl md:text-2xl outline-none border border-transparent focus:border-blue-500 transition-all placeholder:text-slate-700">
+                <button id="_l_b" onclick="_auth()" class="w-full bg-white text-black p-5 rounded-3xl font-bold text-lg md:text-xl hover:bg-slate-200 active:scale-95 transition-all">進入</button>
+            </div>
+            <p id="_e_m" class="text-red-500 text-sm mt-4 invisible h-5">密碼錯誤或網路異常，請稍候重試</p>
+        </div>
+    </div>
+
+    <div id="_m_c" class="max-w-5xl mx-auto p-4 md:p-10 hidden text-slate-900">
+        <header class="bg-gradient-to-br from-slate-800 to-slate-950 text-white p-6 md:p-10 rounded-[2.5rem] shadow-2xl mb-8 relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h1 class="text-xl md:text-3xl font-bold tracking-tight">海巡 114-2 專</h1>
+                        <p class="text-slate-400 text-xs md:text-sm mt-1 font-medium italic">海湖受訓紀錄</p>
+                    </div>
+                    <button onclick="_lout()" class="p-3 bg-white/10 rounded-2xl hover:bg-red-500/20 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-3xl">
+                        <span id="_c_l" class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">載入中...</span>
+                        <div id="_ct" class="text-xl md:text-2xl font-mono font-bold text-blue-400 tracking-tighter">--d --h --m --s</div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-3xl">
+                        <span class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">當前階段任務</span>
+                        <div id="_cp" class="text-xl md:text-2xl font-bold text-emerald-400 truncate tracking-tight">載入中...</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8">
+            <h2 class="font-bold text-slate-800 flex items-center text-lg mb-6"><span>🔗</span> 常用資源</h2>
+            <div id="_l_k" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3"></div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div class="lg:col-span-1 space-y-8">
+                <div class="bg-white p-2 rounded-[2.5rem] border border-slate-100 shadow-sm photo-container">
+                    <div class="overflow-hidden rounded-[2.2rem] bg-black aspect-video flex items-center justify-center">
+                        <img id="_u_p" src="" alt="CGA Photo" class="w-full h-full object-contain clickable-photo" onclick="_o_lb()">
+                    </div>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <h2 class="font-bold text-slate-800 mb-6 flex items-center text-lg"><span>📊</span> 測驗評分與標準</h2>
+                    <div id="_c_r" class="space-y-4 text-slate-700"></div>
+                </div>
+            </div>
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <h2 class="font-bold text-slate-800 flex items-center text-lg"><span>📅</span> 重要時程</h2>
+                        <span class="text-[10px] font-bold text-slate-400 bg-white px-4 py-1.5 rounded-full border border-slate-200 uppercase tracking-tighter">114-2 CGA</span>
+                    </div>
+                    <div class="p-6 md:p-8"><div id="_s_l" class="space-y-4"></div></div>
+                </div>
+            </div>
+        </div>
+        <footer class="text-center py-12"><p class="text-slate-400 text-[10px] md:text-xs font-medium tracking-wide uppercase">通資電輔助工具，僅供學員內參 2026.05.16</p></footer>
+    </div>
+
+    <script>
+        const _0x55d2 = { ADMIN: '系統行政', EXAM: '學科測驗', STUDY: '研讀準備', TRAINING: '技術訓練', FIELD: '實務見習', CELEBRATION: '重要典禮' };
+        let _0x22f1 = [{ date: '2026-04-01', title: '教育接訓', type: _0x55d2.ADMIN, desc: '轉入海湖學校教育' },{ date: '2026-08-13', title: '結訓授階', type: _0x55d2.CELEBRATION, desc: '正式掛階' }];
+        let _0x9e33 = [], _0x88f2 = null;
+
+        const _0x1a2b = {
+            lo: document.getElementById('_l_o'), lc: document.getElementById('_l_c'), lb: document.getElementById('_l_b'),
+            pi: document.getElementById('pass-input'), em: document.getElementById('_e_m'), mc: document.getElementById('_m_c'),
+            cl: document.getElementById('_c_l'), ct: document.getElementById('_ct'), cp: document.getElementById('_cp'),
+            lk: document.getElementById('_l_k'), sl: document.getElementById('_s_l'), cr: document.getElementById('_c_r'),
+            up: document.getElementById('_u_p'), lbx: document.getElementById('_lbx'), lbi: document.getElementById('_lbx_i')
+        };
+
+        function _o_lb(){ _0x1a2b.lbi.src = window.CONFIG.USER_PHOTO_URL; _0x1a2b.lbx.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function _c_lb(){ _0x1a2b.lbx.classList.remove('active'); document.body.style.overflow = ''; }
+        function _pd(_0x4d){ if(!_0x4d) return new Date(); const _0x1f = _0x4d.split('-'); return new Date(parseInt(_0x1f[0]), parseInt(_0x1f[1]) - 1, parseInt(_0x1f[2])); }
+        function _eh(_0x33){ return String(_0x33).replace(/[&<>"']/g, _0x1e => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[_0x1e])); }
+
+        async function _auth() {
+            const _0xval = _0x1a2b.pi.value; if(!_0xval) return;
+            _0x1a2b.lb.classList.add('_dsbl_btn'); _0x1a2b.lb.innerText = "驗證中..."; _0x1a2b.em.classList.add('invisible');
+            try {
+                const _0xup = `${window._A_B}?type=login&pw=${encodeURIComponent(_0xval)}&user=${encodeURIComponent("首頁")}&ip=${window._C_I.ip}&ua=${encodeURIComponent(window._C_I.ua)}&sw=${window._C_I.sw}&sh=${window._C_I.sh}`;
+                const _0xctrl = new AbortController(); const _0xtid = setTimeout(() => _0xctrl.abort(), 10000);
+                const _0xr = await fetch(_0xup, { signal: _0xctrl.signal }); const _0xd = await _0xr.json(); clearTimeout(_0xtid);
+                if(_0xd.auth){ sessionStorage.setItem('_u_t_k', '1'); _ents(); } else { _herr("密碼錯誤，請重新輸入"); }
+            } catch(e){ _herr("伺服器連線失敗，請檢查網路"); }
+        }
+
+        function _herr(_0xmsg){
+            _0x1a2b.lc.classList.add('_shk_act'); _0x1a2b.em.innerText = _0xmsg; _0x1a2b.em.classList.remove('invisible');
+            setTimeout(() => { _0x1a2b.lc.classList.remove('_shk_act'); _0x1a2b.lb.classList.remove('_dsbl_btn'); _0x1a2b.lb.innerText = "進入"; }, 1000);
+        }
+
+        function _lout(){ if(_0x88f2) clearInterval(_0x88f2); sessionStorage.clear(); window.location.reload(); }
+        function _ents(){ _0x1a2b.lo.style.display = 'none'; document.body.style.backgroundColor = "#f8fafc"; _0x1a2b.mc.classList.remove('hidden'); _init(); }
+
+        function _rlk(){
+            _0x1a2b.lk.innerHTML = window.CONFIG.RESOURCES.map(_0xll => `
+                <a href="${_eh(_0xll.url)}" target="_blank" class="${_eh(_0xll.color)} text-white p-4 rounded-3xl text-center text-xs font-bold shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center justify-center min-h-[60px]">
+                    ${_eh(_0xll.name)}
+                </a>
+            `).join('');
+        }
+
+        function _rsl(){
+            const _0xn = new Date();
+            _0x1a2b.sl.innerHTML = _0x9e33.map(_0xev => {
+                const _0xs = _pd(_0xev.date), _0xe = _pd(_0xev.dateEnd || _0xev.date); _0xe.setHours(23, 59, 59);
+                const _0xip = _0xe < _0xn, _0xio = _0xn >= _0xs && _0xn <= _0xe;
+                const _0xf = _0xd => `${_0xd.getMonth() + 1}/${_0xd.getDate()}`;
+                return `<div class="event-card border-l-4 p-5 rounded-r-3xl bg-white border-slate-100 border transition-all ${_0xip ? 'opacity-40 grayscale-[0.5]' : 'shadow-sm'} ${_0xio ? 'ring-2 ring-blue-500/20 border-l-blue-500 bg-blue-50/10' : 'border-l-slate-200'}">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1"><span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">${_eh(_0xev.type)}</span>${_0xio ? '<span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-600 text-white animate-pulse">進行中</span>' : ''}</div>
+                            <h3 class="font-bold text-slate-800 text-sm md:text-base">${_eh(_0xev.title)}</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">${_eh(_0xev.desc)}</p>
+                        </div>
+                        <div class="sm:text-right"><div class="text-sm md:text-base font-mono font-bold text-slate-700">${_0xev.dateEnd ? _0xf(_0xs)+' - '+_0xf(_0xe) : _0xf(_0xs)}</div>${_0xip ? '<span class="text-[10px] font-bold text-emerald-500">已達成</span>' : ''}</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        async function _fdd() {
+            try {
+                const _0xsr = await fetch(`${window._A_B}?type=getSchedule&user=首頁`); const _0xsd = await _0xsr.json();
+                _0x9e33 = Array.isArray(_0xsd) ? _0xsd.sort((a, b) => _pd(a.date) - _pd(b.date)) : _0x22f1; _rsl();
+                const _0xcrr = await fetch(`${window._A_B}?type=getCriteria&user=首頁`); const _0xcrd = await _0xcrr.json();
+                if(_0xcrd && !_0xcrd.error) _rcr(_0xcrd); else _rcrd();
+            } catch(e){ _0x9e33 = _0x22f1; _rsl(); _rcrd(); }
+        }
+
+        function _rcr(_0xd) {
+            let _0xh = '';
+            if(_0xd.physical){ _0xh += `<div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-2"><span class="text-xs font-bold text-slate-400 uppercase block">體能測驗標準</span>${_0xd.physical.map(_0xi => `<div class="flex justify-between items-center"><span class="text-sm font-medium">${_eh(_0xi.name)}</span><span class="font-bold text-blue-600 text-sm">${_eh(_0xi.value)}</span></div>`).join('')}</div>`; }
+            if(_0xd.academic){ _0xh += `<div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-2"><span class="text-xs font-bold text-slate-400 uppercase block">學科測驗權重</span>${_0xd.academic.map(_0xi => `<div class="flex justify-between items-center"><span class="text-sm font-medium">${_eh(_0xi.name)}</span><span class="font-bold text-emerald-600 text-sm">${_eh(_0xi.value)}</span></div>`).join('')}</div>`; }
+            _0x1a2b.cr.innerHTML = _0xh || '<p class="text-xs text-slate-400 text-center py-4">數據同步中...</p>';
+        }
+        function _rcrd(){ _0x1a2b.cr.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">數據載入中...</p>'; }
+
+        function _uct() {
+            const _0xt = window.CONFIG.TARGET, _0xtg = new Date(_0xt.Y, _0xt.M - 1, _0xt.D, _0xt.H, _0xt.Min), _0xn = new Date(), _0xdf = _0xtg - _0xn;
+            if(_0x1a2b.cl.innerText !== window.CONFIG.TARGET_LABEL) _0x1a2b.cl.innerText = window.CONFIG.TARGET_LABEL;
+            if(_0xdf <= 0){ _0x1a2b.ct.innerText = "已順利結訓"; if(_0x88f2) clearInterval(_0x88f2); return; }
+            const _0xd = Math.floor(_0xdf / 86400000), _0xh = Math.floor((_0xdf % 86400000) / 3600000), _0xm = Math.floor((_0xdf % 3600000) / 60000), _0xs = Math.floor((_0xdf % 60000) / 1000);
+            _0x1a2b.ct.innerText = `${_0xd}D ${_0xh}H ${_0xm}M ${_0xs}S`;
+            let _0xpt = "受訓中";
+            if(_0xn >= _pd(window.CONFIG.FIELD_START) && _0xn <= _pd(window.CONFIG.FIELD_END)) _0xpt = "實務見習中";
+            else if(_0xn > _pd(window.CONFIG.FIELD_END) && _0xn < _0xtg) _0xpt = "期末衝刺中";
+            if(_0x1a2b.cp.innerText !== _0xpt) _0x1a2b.cp.innerText = _0xpt;
+        }
+
+        function _init() { if(_0x1a2b.up) _0x1a2b.up.src = window.CONFIG.USER_PHOTO_URL; _rlk(); _fdd(); _uct(); if(_0x88f2) clearInterval(_0x88f2); _0x88f2 = setInterval(_uct, 1000); }
+        (async function(){ try{ const _0xr = await fetch("https://api.ipify.org?format=json"); const _0xd = await _0xr.json(); window._C_I.ip = _0xd.ip; } catch(e){ window._C_I.ip = "Unknown"; } })();
+        window.onload = () => { if(sessionStorage.getItem('_u_t_k')) _ents(); _0x1a2b.pi.addEventListener('keypress', e => { if(e.key === 'Enter') _auth(); }); };
+    </script>
+</body>
+</html>
