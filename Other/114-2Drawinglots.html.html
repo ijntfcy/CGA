@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>命運轉盤</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: #555;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            margin-top: 8vh;
+            text-align: center;
+            z-index: 10;
+        }
+        .title {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: #777;
+        }
+        .result-display {
+            font-size: 36px;
+            font-weight: bold;
+            height: 60px;
+            color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 30px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .wheel-container {
+            position: relative;
+            margin-top: 5vh;
+            width: 85vw;
+            max-width: 380px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid #ffb6c1;
+            z-index: 10;
+            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.1));
+        }
+        .spin-btn {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 4px solid #fdfbfb;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.1s;
+        }
+        .spin-btn:active {
+            transform: scale(0.9);
+        }
+        .spin-btn.locked {
+            background-color: #f0f0f0;
+            color: #bbb;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .controls {
+            margin-top: 5vh;
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+        .action-btn {
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            background: #fff;
+            color: #666;
+            transition: 0.2s;
+        }
+        .action-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn-stop {
+            background: #ffe5e5;
+            color: #d32f2f;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 22px;
+        }
+        .list-container {
+            height: 45vh;
+            overflow-y: auto;
+            background: #fcfcfc;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 10px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            color: #555;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .list-item:hover {
+            background: #f5f7fa;
+        }
+        .list-item input {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: #a2c2e1;
+            pointer-events: none;
+        }
+        .winner-text {
+            font-size: 40px;
+            color: #444;
+            text-align: center;
+            margin: 20px 0 30px 0;
+            font-weight: bold;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .modal-buttons .action-btn {
+            flex: 1;
+        }
+        .btn-save { background: #b5d5c5; color: #444; }
+        .btn-cancel { background: #f0f0f0; color: #777; }
+        .btn-unlock { background: #a2c2e1; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="title">轉動命運</div>
+        <div class="result-display" id="resultDisplay">請點擊轉</div>
+    </div>
+
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <canvas id="wheelCanvas" width="800" height="800"></canvas>
+        <div class="spin-btn" id="spinBtn">轉</div>
+    </div>
+
+    <div class="controls">
+        <button class="action-btn btn-stop" id="stopBtn">停止</button>
+        <button class="action-btn" id="settingsBtn">⚙️ 設定</button>
+    </div>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2>設定名單</h2>
+            <div class="list-container" id="studentChecklist"></div>
+            <div class="modal-buttons">
+                <button class="action-btn btn-cancel" id="cancelBtn">取消</button>
+                <button class="action-btn btn-save" id="saveBtn">儲存</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="winnerModal">
+        <div class="modal-content">
+            <h2>🎉 認命的接受事實 🎉</h2>
+            <div class="winner-text" id="winnerDisplay"></div>
+            <div class="modal-buttons">
+                <button class="action-btn btn-unlock" id="unlockBtn">喜極而泣</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialStudents = [
+            "01 潘盈君", "03 鄭瑄蓉", "04 莊雅玲", "05 余岱樺", "06 李怡霖", 
+            "07 賴宜屏", "08 劉謹榕", "09 許維庭", "10 謝岳凌", "11 湯涵雯", 
+            "12 吳若瑄", "13 許喬恩", "14 林依柔", "15 高于庭", "16 劉覲蓉", 
+            "17 林家伃", "18 林佳瑩", "19 許豪升", "20 洪瑞易", "22 吳軒宏", 
+            "23 黃昱騰", "24 梁展松", "25 陳詠婕", "26 李佳娟", "27 滕琳", 
+            "28 陳梓豪", "29 謝忠義", "30 林陞", "31 許幃茗", "32 謝誌恩", 
+            "33 周品志", "34 朱仲凱", "35 蔡鎮淇", "36 李宏瑋", "37 陳定嘉", 
+            "38 李建霖", "39 許星絃", "40 蘇瑋琮", "41 陳昭穎", "42 彭一升", 
+            "43 陳鐿夫", "44 李泳辰", "46 蔡豐懋", "47 黃栢勛", "48 張智傑", 
+            "49 劉冀", "50 盧智培", "51 陳彥宏", "52 陳思齊", "53 席邦傑", 
+            "54 朱弘倫", "55 范駿成"
+        ];
+
+        let wheelData = initialStudents.map(name => ({ name, active: true }));
+        let tempWheelData = [];
+        let activeList = [];
+        let angle = 0;
+        let velocity = 0;
+        let friction = 0.985;
+        let isSpinning = false;
+        let hasSpun = false;
+        let isLocked = false;
+
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const resultDisplay = document.getElementById('resultDisplay');
+        const spinBtn = document.getElementById('spinBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const saveBtn = document.getElementById('saveBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const studentChecklist = document.getElementById('studentChecklist');
+        const winnerModal = document.getElementById('winnerModal');
+        const winnerDisplay = document.getElementById('winnerDisplay');
+        const unlockBtn = document.getElementById('unlockBtn');
+
+        function updateActiveList() {
+            activeList = wheelData.filter(item => item.active).map(item => item.name);
+        }
+
+        function drawWheel() {
+            const numSegments = activeList.length;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = centerX;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (numSegments === 0) {
+                ctx.fillStyle = "#e0e0e0";
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.fill();
+                return;
+            }
+
+            const anglePerSegment = (Math.PI * 2) / numSegments;
+
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * anglePerSegment - (Math.PI / 2) - (anglePerSegment / 2);
+                const endAngle = startAngle + anglePerSegment;
+
+                const hue = (i * (360 / numSegments));
+                ctx.fillStyle = `hsl(${hue}, 65%, 82%)`;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.fill();
+
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "rgba(255,255,255,0.5)";
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + anglePerSegment / 2);
+                ctx.textAlign = "right";
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = "#555";
+                
+                let fontSize = numSegments > 30 ? 18 : 24;
+                ctx.font = `bold ${fontSize}px sans-serif`;
+                
+                ctx.fillText(activeList[i], radius - 25, 0);
+                ctx.restore();
+            }
+        }
+
+        function getCurrentName() {
+            if (activeList.length === 0) return "無名單";
+            const numSegments = activeList.length;
+            const degPerSegment = 360 / numSegments;
+            const actualAngle = angle % 360;
+            const index = Math.floor(((360 - actualAngle) + degPerSegment / 2) % 360 / degPerSegment);
+            return activeList[index];
+        }
+
+        function triggerWin() {
+            isLocked = true;
+            hasSpun = false;
+            spinBtn.classList.add('locked');
+            
+            const winner = getCurrentName();
+            winnerDisplay.textContent = winner;
+            winnerModal.style.display = 'flex';
+        }
+
+        function animate() {
+            if (velocity > 0 || isSpinning) {
+                angle += velocity;
+                
+                if (!isSpinning) {
+                    velocity *= friction;
+                }
+                
+                if (!isSpinning && velocity > 2) {
+                    hasSpun = true;
+                }
+                
+                if (!isSpinning && velocity < 0.1) {
+                    velocity = 0;
+                    if (hasSpun) {
+                        triggerWin();
+                    }
+                }
+
+                canvas.style.transform = `rotate(${angle}deg)`;
+                resultDisplay.textContent = getCurrentName();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function startSpin(e) {
+            if (e) e.preventDefault();
+            if (isLocked || activeList.length === 0) return;
+            isSpinning = true;
+            velocity += 15;
+            if (velocity > 40) velocity = 40;
+        }
+
+        function endSpin() {
+            isSpinning = false;
+        }
+
+        spinBtn.addEventListener('mousedown', startSpin);
+        spinBtn.addEventListener('touchstart', startSpin, { passive: false });
+
+        spinBtn.addEventListener('mouseup', endSpin);
+        spinBtn.addEventListener('mouseleave', endSpin);
+        spinBtn.addEventListener('touchend', endSpin);
+
+        stopBtn.addEventListener('click', () => {
+            if (isLocked || activeList.length === 0 || velocity === 0) return;
+            isSpinning = false;
+            velocity = 0;
+            triggerWin();
+            canvas.style.transform = `rotate(${angle}deg)`;
+            resultDisplay.textContent = getCurrentName();
+        });
+
+        unlockBtn.addEventListener('click', () => {
+            winnerModal.style.display = 'none';
+            isLocked = false;
+            spinBtn.classList.remove('locked');
+            resultDisplay.textContent = "請點擊轉";
+        });
+
+        settingsBtn.addEventListener('click', () => {
+            if (isLocked || velocity > 0) return;
+            
+            tempWheelData = JSON.parse(JSON.stringify(wheelData));
+            studentChecklist.innerHTML = "";
+            
+            tempWheelData.forEach((student, index) => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = student.active;
+                
+                const label = document.createElement('span');
+                label.textContent = student.name;
+                label.style.flex = '1';
+
+                div.addEventListener('click', () => {
+                    student.active = !student.active;
+                    checkbox.checked = student.active;
+                });
+                
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                studentChecklist.appendChild(div);
+            });
+            
+            settingsModal.style.display = 'flex';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+
+        saveBtn.addEventListener('click', () => {
+            wheelData = JSON.parse(JSON.stringify(tempWheelData));
+            updateActiveList();
+            drawWheel();
+            resultDisplay.textContent = "請點擊轉";
+            settingsModal.style.display = 'none';
+        });
+
+        updateActiveList();
+        drawWheel();
+        animate();
+    </script>
+</body>
+</html>
