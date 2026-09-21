@@ -128,19 +128,20 @@
 
   <div id="statusBox" class="status-box"></div>
 
-  <div id="resultsArea" class="results-area">
+<div id="resultsArea" class="results-area">
+
+    <!-- 1. 巡邏記事 (原第三個) -->
     <div class="column-card">
       <div class="column-header">
-        <h3><i class="fa-solid fa-route"></i> 巡邏點紀錄</h3>
-        <button class="btn-copy-all" onclick="copySection('pContent')">
-          <i class="fa-regular fa-copy"></i> 巡邏點紀錄
+        <h3><i class="fa-solid fa-pen-to-square"></i> 巡邏記事</h3>
+        <button class="btn-copy-all" onclick="copySection('rContent')">
+          <i class="fa-regular fa-copy"></i> 巡邏記事
         </button>
       </div>
-      <div class="column-content" id="pContent"></div>
+      <div class="column-content" id="rContent"></div>
     </div>
 
-
-
+    <!-- 2. 停留時間 (原第二個) -->
     <div class="column-card">
       <div class="column-header">
         <h3><i class="fa-solid fa-stopwatch"></i> 停留時間</h3>
@@ -151,18 +152,19 @@
       <div class="column-content" id="qContent"></div>
     </div>
 
-
-
+    <!-- 3. 巡邏點紀錄 (原第一個) -->
     <div class="column-card">
       <div class="column-header">
-        <h3><i class="fa-solid fa-pen-to-square"></i> 巡邏記事</h3>
-        <button class="btn-copy-all" onclick="copySection('rContent')">
-          <i class="fa-regular fa-copy"></i> 巡邏記事
+        <h3><i class="fa-solid fa-route"></i> 巡邏點紀錄</h3>
+        <button class="btn-copy-all" onclick="copySection('pContent')">
+          <i class="fa-regular fa-copy"></i> 巡邏點紀錄
         </button>
       </div>
-      <div class="column-content" id="rContent"></div>
+      <div class="column-content" id="pContent"></div>
     </div>
+
   </div>
+
 </div>
 
 <script>
