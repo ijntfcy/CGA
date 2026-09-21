@@ -34,7 +34,7 @@
     <div class="w-full bg-[#120a06]/90 border border-orange-900/60 rounded-3xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-2xl">
       <div class="flex items-center justify-center space-x-2">
         <span class="text-amber-400 text-2xl">⚠️</span>
-        <span class="text-orange-500 font-medium text-sm sm:text-base tracking-wide">此系統為休假人員自主開發，非官方正式軟體。</span>
+        <span class="text-orange-500 font-medium text-sm sm:text-base tracking-wide">此為休假人員開發，非官方正式網頁。</span>
       </div>
       <p class="text-orange-500 font-medium text-sm sm:text-base tracking-wide">
         內容以法規法令為主，僅供內部人員參閱。
@@ -127,13 +127,9 @@
 
   <script>
     const NAV_LINKS = [
-      { name: "問題回報", icon: "🚩", type: "modal", modalId: "reportModal", color: "amber" },
-
       { name: "行動化勤務系統", icon: "✅", url: "https://mdrs.cga.gov.tw/", color: "emerald" },
+      { name: "巡邏20260921", icon: "⚖️", url: "https://ijntfcy.github.io/CGA/Anping/patrol.html", color: "slate" },
       { name: "119dts", icon: "✍️", url: "https://119dts.tncfd.gov.tw/DTS/caselist/html", color: "indigo" },
-      { name: "全國法規資料庫", icon: "⏰", url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0090009", color: "purple" },
-      { name: "海洋委員會海巡署全球資訊網", icon: "📋", url: "https://www.cga.gov.tw/GipOpen/wSite/mp?mp=999", color: "orange" },
-      { name: "備用連結", icon: "⚖️", url: "https://www.google.com/", color: "slate" },
       { name: "備用連結", icon: "📑", url: "https://www.google.com/", color: "rose" },
       { name: "備用連結", icon: "🌊", url: "https://www.google.com/", color: "blue" },
       { name: "備用連結", icon: "📅", url: "https://www.google.com/", color: "cyan" },
@@ -141,7 +137,10 @@
       { name: "備用連結", icon: "🎰", url: "https://www.google.com/", color: "violet" },
       { name: "備用連結", icon: "🏃", url: "https://www.google.com/", color: "red" },
       { name: "備用連結", icon: "📞", url: "https://www.google.com/", color: "stone" },
-      { name: "備用連結", icon: "💡", url: "https://www.google.com/", color: "gray" }
+      { name: "備用連結", icon: "💡", url: "https://www.google.com/", color: "gray" },
+      { name: "全國法規資料庫", icon: "⏰", url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0090009", color: "purple" },
+      { name: "海洋委員會海巡署全球資訊網", icon: "📋", url: "https://www.cga.gov.tw/GipOpen/wSite/mp?mp=999", color: "orange" },
+      { name: "問題回報", icon: "🚩", type: "modal", modalId: "reportModal", color: "amber" }
     ];
 
     const COLOR_MAP = {
