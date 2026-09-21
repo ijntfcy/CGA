@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>安漁巡邏</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Helvetica Neue", sans-serif; }
+    
+    /* 大地米灰風格背景 */
+    body {
+      background: #f1f0ea;
+      color: #2c2c2c;
+      min-height: 100vh;
+      padding: 20px 15px 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
+    
+    .header { text-align: center; margin-top: 10px; margin-bottom: 5px; }
+    .header h1 { font-size: 1.5rem; color: #1e3a8a; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; }
+    .header p { font-size: 0.85rem; color: #78716c; margin-top: 4px; }
+
+    .card {
+      background: #fbfbf9;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e5e5e0;
+    }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 0.9rem; color: #44403c; margin-bottom: 8px; font-weight: 600; }
+    select, input[type="password"] {
+      width: 100%; padding: 14px; background: #e2e0d8; border: 1px solid #d6d3d1; border-radius: 12px; color: #1c1917; font-size: 1rem; outline: none; transition: all 0.2s;
+    }
+    select:focus, input[type="password"]:focus { border-color: #2563eb; background: #ffffff; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s, opacity 0.2s;
+      margin-top: 10px;
+    }
+    .btn-submit:active { transform: scale(0.98); }
+
+    .status-box { padding: 14px 16px; border-radius: 12px; font-size: 0.92rem; display: none; align-items: center; gap: 10px; word-break: break-all; }
+    .status-box.info { display: flex; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .status-box.success { display: flex; background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-box.error { display: flex; background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    .results-area { display: none; flex-direction: column; gap: 20px; }
+    .column-card { background: #fbfbf9; border-radius: 18px; border: 1px solid #e5e5e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden; }
+    .column-header {
+      background: #e7e5df; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d6d3d1;
+    }
+    .column-header h3 { font-size: 1rem; color: #1e3a8a; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+    .btn-copy-all {
+      background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.2s;
+    }
+    .btn-copy-all:hover { background: #1d4ed8; }
+    
+    .column-content {
+      padding: 16px; font-size: 0.95rem; color: #292524; white-space: pre-wrap; line-height: 1.6; background: #fbfbf9;
+      max-height: 400px; overflow-y: auto;
+    }
+
+    .spinner { animation: spin 1s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1><i class="fa-solid fa-compass"></i> 安漁巡邏</h1>
+    <p>2026/09/21 一名曾經被嚴格督導、如今仍在與重力對抗的人製作</p>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="shiftSelect"><i class="fa-regular fa-clock"></i> 選擇班別</label>
+      <select id="shiftSelect">
+        <option value="日1">日1</option>
+        <option value="日2">日2</option>
+        <option value="日3">日3</option>
+        <option value="夜1">夜1</option>
+        <option value="夜2">夜2</option>
+        <option value="夜3">夜3</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="routeSelect"><i class="fa-solid fa-map-pin"></i> 選擇路線</label>
+      <select id="routeSelect">
+        <option value="A">路線 A</option>
+        <option value="B">路線 B</option>
+        <option value="C">路線 C</option>
+        <option value="D">路線 D</option>
+        <option value="E">路線 E</option>
+        <option value="F">路線 F</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="pwdInput"><i class="fa-solid fa-key"></i>通行密碼</label>
+      <input type="password" id="pwdInput" placeholder="請輸入神秘數字" pattern="[0-9]*" inputmode="numeric">
+    </div>
+
+    <button class="btn-submit" onclick="queryData()">
+      <i class="fa-solid fa-magnifying-glass"></i> 查詢資料
+    </button>
+  </div>
+
+  <div id="statusBox" class="status-box"></div>
+
+  <div id="resultsArea" class="results-area">
+    <div class="column-card">
+      <div class="column-header">
+        <h3><i class="fa-solid fa-route"></i> 巡邏點紀錄</h3>
+        <button class="btn-copy-all" onclick="copySection('pContent')">
+          <i class="fa-regular fa-copy"></i> 巡邏點紀錄
+        </button>
+      </div>
+      <div class="column-content" id="pContent"></div>
+    </div>
+
+
+
+    <div class="column-card">
+      <div class="column-header">
+        <h3><i class="fa-solid fa-stopwatch"></i> 停留時間</h3>
+        <button class="btn-copy-all" onclick="copySection('qContent')">
+          <i class="fa-regular fa-copy"></i> 停留時間
+        </button>
+      </div>
+      <div class="column-content" id="qContent"></div>
+    </div>
+
+
+
+    <div class="column-card">
+      <div class="column-header">
+        <h3><i class="fa-solid fa-pen-to-square"></i> 巡邏記事</h3>
+        <button class="btn-copy-all" onclick="copySection('rContent')">
+          <i class="fa-regular fa-copy"></i> 巡邏記事
+        </button>
+      </div>
+      <div class="column-content" id="rContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // XXXX
+  const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbywn__Csl4slpl804a4X3IpQWN5qfDvdl0jxnGlSwLY9mTfTG1IWCTMiZV8JZCq1tmJcg/exec";
+
+  function queryData() {
+    const shift = document.getElementById("shiftSelect").value;
+    const route = document.getElementById("routeSelect").value;
+    const password = document.getElementById("pwdInput").value.trim();
+
+    if (!password) {
+      showStatus('<i class="fa-solid fa-triangle-exclamation"></i> 請輸入密碼！', "error");
+      return;
+    }
+
+    showStatus('<i class="fa-solid fa-spinner spinner"></i> 與長官溝通ing...', "info");
+
+    fetch(GAS_WEB_APP_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ password: password, shift: shift, route: route })
+    })
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+  }
+
+  function onSuccess(response) {
+    const resultsArea = document.getElementById("resultsArea");
+
+    if (!response.success) {
+      showStatus('<i class="fa-solid fa-triangle-exclamation"></i> ' + response.message, "error");
+      resultsArea.style.display = "none";
+      return;
+    }
+
+    if (!response.data || response.data.length === 0) {
+      showStatus(`<i class="fa-solid fa-folder-open"></i> 查無 ${response.shift} 班別 / 路線 ${response.route} 的巡邏資料。`, "info");
+      resultsArea.style.display = "none";
+      return;
+    }
+
+    showStatus(`<i class="fa-solid fa-circle-check"></i> 成功讀取 ${response.shift} 班別 / 路線 ${response.route} （共 ${response.data.length} 筆紀錄）`, "success");
+
+    let pTextList = [];
+    let qTextList = [];
+    let rTextList = [];
+
+    response.data.forEach(item => {
+      if (item.p) pTextList.push(item.p);
+      if (item.q) qTextList.push(item.q);
+      if (item.r) rTextList.push(item.r);
+    });
+
+    document.getElementById("pContent").innerText = pTextList.join("\n\n");
+    document.getElementById("qContent").innerText = qTextList.join("\n\n");
+    document.getElementById("rContent").innerText = rTextList.join("\n\n");
+
+    resultsArea.style.display = "flex";
+  }
+
+  function copySection(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    if (!text) {
+      showStatus('無內容可複製！', "error");
+      return;
+    }
+
+    navigator.clipboard.writeText(text).then(() => {
+      showStatus('<i class="fa-solid fa-check"></i> 已成功複製！可直接貼至 iPhone 備忘錄', "success");
+    }).catch(err => {
+      showStatus('複製失敗：' + err, "error");
+    });
+  }
+
+  function showStatus(htmlContent, type) {
+    const statusBox = document.getElementById("statusBox");
+    statusBox.className = `status-box ${type}`;
+    statusBox.innerHTML = htmlContent;
+  }
+
+  function onFailure(error) {
+    showStatus('<i class="fa-solid fa-triangle-exclamation"></i> 連線發生錯誤：' + (error.message || error), "error");
+  }
+</script>
+
+</body>
+</html>
