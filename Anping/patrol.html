@@ -56,6 +56,7 @@
       margin-top: 10px;
     }
     .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .status-box { padding: 14px 16px; border-radius: 12px; font-size: 0.92rem; display: none; align-items: center; gap: 10px; word-break: break-all; }
     .status-box.info { display: flex; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
@@ -94,7 +95,7 @@
   <div class="card">
     <div class="form-group">
       <label for="shiftSelect"><i class="fa-regular fa-clock"></i> 選擇班別</label>
-      <select id="shiftSelect">
+      <select id="shiftSelect" onchange="warmupGAS()">
         <option value="日1">日1</option>
         <option value="日2">日2</option>
         <option value="日3">日3</option>
@@ -106,7 +107,7 @@
 
     <div class="form-group">
       <label for="routeSelect"><i class="fa-solid fa-map-pin"></i> 選擇路線</label>
-      <select id="routeSelect">
+      <select id="routeSelect" onchange="warmupGAS()">
         <option value="A">路線 A</option>
         <option value="B">路線 B</option>
         <option value="C">路線 C</option>
@@ -117,59 +118,65 @@
     </div>
 
     <div class="form-group">
-      <label for="pwdInput"><i class="fa-solid fa-key"></i>通行密碼</label>
-      <input type="password" id="pwdInput" placeholder="請輸入神秘數字" pattern="[0-9]*" inputmode="numeric">
+      <label for="pwdInput"><i class="fa-solid fa-key"></i> 通行密碼</label>
+      <input type="password" id="pwdInput" placeholder="請輸入神秘數字" pattern="[0-9]*" inputmode="numeric" onfocus="warmupGAS()" onkeydown="if(event.key==='Enter') queryData()">
     </div>
 
-    <button class="btn-submit" onclick="queryData()">
-      <i class="fa-solid fa-magnifying-glass"></i> 查詢資料
+    <button id="btnSubmit" class="btn-submit" onclick="queryData()">
+      <i class="fa-solid fa-magnifying-glass"></i> <span id="btnText">查詢資料</span>
     </button>
   </div>
 
   <div id="statusBox" class="status-box"></div>
 
-<div id="resultsArea" class="results-area">
-
-    <!-- 1. 巡邏記事 (原第三個) -->
+  <div id="resultsArea" class="results-area">
+    <!-- 1. 巡邏記事 -->
     <div class="column-card">
       <div class="column-header">
         <h3><i class="fa-solid fa-pen-to-square"></i> 巡邏記事</h3>
         <button class="btn-copy-all" onclick="copySection('rContent')">
-          <i class="fa-regular fa-copy"></i> 巡邏記事
+          <i class="fa-regular fa-copy"></i> 複製記事
         </button>
       </div>
       <div class="column-content" id="rContent"></div>
     </div>
 
-    <!-- 2. 停留時間 (原第二個) -->
+    <!-- 2. 停留時間 -->
     <div class="column-card">
       <div class="column-header">
         <h3><i class="fa-solid fa-stopwatch"></i> 停留時間</h3>
         <button class="btn-copy-all" onclick="copySection('qContent')">
-          <i class="fa-regular fa-copy"></i> 停留時間
+          <i class="fa-regular fa-copy"></i> 複製停留時間
         </button>
       </div>
       <div class="column-content" id="qContent"></div>
     </div>
 
-    <!-- 3. 巡邏點紀錄 (原第一個) -->
+    <!-- 3. 巡邏點紀錄 -->
     <div class="column-card">
       <div class="column-header">
         <h3><i class="fa-solid fa-route"></i> 巡邏點紀錄</h3>
         <button class="btn-copy-all" onclick="copySection('pContent')">
-          <i class="fa-regular fa-copy"></i> 巡邏點紀錄
+          <i class="fa-regular fa-copy"></i> 複製點紀錄
         </button>
       </div>
       <div class="column-content" id="pContent"></div>
     </div>
-
   </div>
-
 </div>
 
 <script>
-  // XXXX
   const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbywn__Csl4slpl804a4X3IpQWN5qfDvdl0jxnGlSwLY9mTfTG1IWCTMiZV8JZCq1tmJcg/exec";
+
+  let isWarmedUp = false;
+  const dataCache = {}; // 記憶體快取
+
+  // 1. GAS 預熱機制：操作下拉選單或聚焦密碼框時先行醒來
+  function warmupGAS() {
+    if (isWarmedUp) return;
+    isWarmedUp = true;
+    fetch(`${GAS_WEB_APP_URL}?action=ping`, { mode: 'no-cors' }).catch(() => {});
+  }
 
   function queryData() {
     const shift = document.getElementById("shiftSelect").value;
@@ -181,16 +188,45 @@
       return;
     }
 
+    const cacheKey = `${shift}_${route}_${password}`;
+
+    // 2. 檢查是否有本地快取資料，有則直接 0 秒呈現
+    if (dataCache[cacheKey]) {
+      showStatus(`<i class="fa-solid fa-bolt"></i> 快速讀取 ${shift} / 路線 ${route} 快取資料`, "success");
+      onSuccess(dataCache[cacheKey]);
+      return;
+    }
+
+    const btnSubmit = document.getElementById("btnSubmit");
+    const btnText = document.getElementById("btnText");
+    btnSubmit.disabled = true;
+    btnText.innerText = "查詢中...";
+
     showStatus('<i class="fa-solid fa-spinner spinner"></i> 與長官溝通ing...', "info");
 
-    fetch(GAS_WEB_APP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ password: password, shift: shift, route: route })
-    })
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    // 3. 改用 GET 請求帶參數，免去 POST 帶來的 OPTIONS 預檢延遲
+    const queryParams = new URLSearchParams({
+      action: 'queryPatrol',
+      password: password,
+      shift: shift,
+      route: route
+    });
+
+    fetch(`${GAS_WEB_APP_URL}?${queryParams.toString()}`)
+      .then(response => response.json())
+      .then(data => {
+        btnSubmit.disabled = false;
+        btnText.innerText = "查詢資料";
+        if (data.success) {
+          dataCache[cacheKey] = data; // 寫入快取
+        }
+        onSuccess(data);
+      })
+      .catch(error => {
+        btnSubmit.disabled = false;
+        btnText.innerText = "查詢資料";
+        onFailure(error);
+      });
   }
 
   function onSuccess(response) {
