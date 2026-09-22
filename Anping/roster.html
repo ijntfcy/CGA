@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>安漁勤務班表</title>
+  <title>安漁班表</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -17,9 +17,7 @@
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
-    input:focus, button:focus {
-      outline: none;
-    }
+    input:focus, button:focus { outline: none; }
   </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col justify-between">
@@ -32,7 +30,7 @@
           <i class="fa-solid fa-shield-halved text-lg"></i>
         </div>
         <div>
-          <h1 class="font-bold text-slate-800 text-lg leading-tight">安漁勤務班表</h1>
+          <h1 class="font-bold text-slate-800 text-lg leading-tight">安漁班表</h1>
           <p class="text-xs text-slate-400 font-medium">勤務人員</p>
         </div>
       </div>
@@ -60,7 +58,7 @@
           <i class="fa-solid fa-lock text-2xl"></i>
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-slate-800">安漁勤務班表</h2>
+          <h2 class="text-2xl font-bold text-slate-800">安漁班表</h2>
           <p class="text-slate-400 text-sm mt-1">勤務人員</p>
         </div>
         <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
@@ -183,24 +181,18 @@
     let rawSheetData = [];
     let personnelList = [];
     let shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
+    let leaveData = { numbersStr: "", rawNums: [], formattedList: [] }; 
     let backgroundTimer = null;
 
     window.addEventListener("load", () => {
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-          backgroundTimer = setTimeout(() => {
-            logout();
-          }, 60000);
+          backgroundTimer = setTimeout(() => { logout(); }, 60000);
         } else {
-          if (backgroundTimer) {
-            clearTimeout(backgroundTimer);
-            backgroundTimer = null;
-          }
+          if (backgroundTimer) { clearTimeout(backgroundTimer); backgroundTimer = null; }
         }
       });
-      window.addEventListener("beforeunload", () => {
-        logout();
-      });
+      window.addEventListener("beforeunload", () => { logout(); });
     });
 
     async function handleLogin(e) {
@@ -229,6 +221,7 @@
       currentPassword = "";
       rawSheetData = [];
       shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
+      leaveData = { numbersStr: "", rawNums: [], formattedList: [] };
       document.getElementById("loginSection").classList.remove("hidden");
       document.getElementById("appHeader").classList.add("hidden");
       document.getElementById("appSection").classList.add("hidden");
@@ -263,31 +256,56 @@
       }
     }
 
-    // 配套結構的精準解析 (0-based)
+    // 自動動態定位試算表欄位！
     function parseRawData(data) {
       if (!data || data.length === 0) return;
 
       shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
 
-      // 班別對應的數據起始列索引 (0-based)
+      // 1. 動態掃描第 1 列 (標題列)，找出「數字欄」與「姓名結果欄」的真實 Index
+      const headerRow = data[0] || [];
+      
+      const targetDuties = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二"];
+      let dutyCols = {};   // 存放輸入號碼欄索引
+      let resultCols = {}; // 存放對應姓名結果欄索引
+
+      targetDuties.forEach(dName => {
+        let matchedIndices = [];
+        headerRow.forEach((hText, colIdx) => {
+          if (String(hText).trim() === dName) {
+            matchedIndices.push(colIdx);
+          }
+        });
+
+        if (matchedIndices.length >= 2) {
+          dutyCols[dName] = matchedIndices[0];   // 第一次出現的是號碼欄 (如 G 欄)
+          resultCols[dName] = matchedIndices[1]; // 第二次出現的是姓名結果欄 (如 M 欄)
+        } else if (matchedIndices.length === 1) {
+          // 如果只有一欄，預設 offset 6 欄為結果欄
+          dutyCols[dName] = matchedIndices[0];
+          resultCols[dName] = matchedIndices[0] + 6;
+        } else {
+          // 安全預設 (G~L 為 6~11, M~R 為 12~17)
+          const fallbackMap = { "值班": 6, "檢查": 7, "守望": 8, "巡邏": 9, "備勤": 10, "檢查二": 11 };
+          dutyCols[dName] = fallbackMap[dName];
+          resultCols[dName] = fallbackMap[dName] + 6;
+        }
+      });
+
+      // 2. 班別起始列 (0-based)
       const shiftRowStartMap = {
-        "第一班": 1,   // Row 2
-        "第二班": 7,   // Row 8
-        "第三班": 13   // Row 14
+        "第一班": 1, 
+        "第二班": 7, 
+        "第三班": 13 
       };
 
-      // G=6, H=7, I=8, J=9, K=10, L=11, U=20
-      const dutyCols = [6, 7, 8, 9, 10, 11, 20]; 
-
-      // N=13, O=14, P=15, Q=16, R=17, S=18, V=21
-      const resultCols = [13, 14, 15, 16, 17, 18, 21]; 
-
+      // 3. 讀取並填入班別資料
       Object.keys(shiftRowStartMap).forEach(sName => {
         const startRowIndex = shiftRowStartMap[sName];
 
-        DUTY_KEYS.forEach((key, kIdx) => {
-          const numCol = dutyCols[kIdx];
-          const resCol = resultCols[kIdx];
+        targetDuties.forEach(key => {
+          const numCol = dutyCols[key];
+          const resCol = resultCols[key];
 
           let rawNums = [];
           let formattedList = [];
@@ -314,6 +332,41 @@
           };
         });
       });
+
+      // 4. 自動尋找休假欄位 (標題包含 "休假")
+      let leaveCol = -1;
+      let leaveResultCol = -1;
+      headerRow.forEach((hText, colIdx) => {
+        if (String(hText).trim().includes("休假")) {
+          if (leaveCol === -1) leaveCol = colIdx;
+          else if (leaveResultCol === -1) leaveResultCol = colIdx;
+        }
+      });
+
+      if (leaveCol === -1) leaveCol = 20; // U 欄預設
+      if (leaveResultCol === -1) leaveResultCol = leaveCol + 1; // V 欄預設
+
+      let leaveRawNums = [];
+      let leaveFormattedList = [];
+      for (let r = 1; r < Math.min(25, data.length); r++) {
+        if (data[r]) {
+          const val = data[r][leaveCol];  
+          const resVal = data[r][leaveResultCol]; 
+
+          if (val !== "" && val !== undefined && val !== null) {
+            leaveRawNums.push(String(val).trim());
+          }
+          if (resVal !== "" && resVal !== undefined && resVal !== null) {
+            leaveFormattedList.push(String(resVal).trim());
+          }
+        }
+      }
+
+      leaveData = {
+        numbersStr: leaveRawNums.join(", "),
+        rawNums: leaveRawNums,
+        formattedList: leaveFormattedList
+      };
     }
 
     function selectShift(shiftName) {
@@ -367,9 +420,9 @@
       const currentShiftObj = shiftData[currentShift] || {};
 
       DUTY_KEYS.forEach(key => {
-        const item = currentShiftObj[key] || { formattedList: [] };
+        const item = (key === "休假") ? leaveData : (currentShiftObj[key] || { formattedList: [] });
         const icon = DUTY_ICONS[key] || "fa-shield";
-        const count = item.formattedList.length;
+        const count = item.formattedList ? item.formattedList.length : 0;
 
         let listHtml = "";
         if (item.formattedList && item.formattedList.length > 0) {
@@ -396,7 +449,7 @@
               <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm border border-blue-100">
                 <i class="fa-solid ${icon}"></i>
               </div>
-              <h3 class="font-bold text-slate-800 text-base">${key}</h3>
+              <h3 class="font-bold text-slate-800 text-base">${key} ${key === '休假' ? '<span class="text-xs text-slate-400 font-normal">(全天)</span>' : ''}</h3>
             </div>
             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${count > 0 ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-slate-100 text-slate-400'}">${count} 人</span>
           </div>
@@ -414,7 +467,7 @@
       const currentShiftObj = shiftData[currentShift] || {};
 
       DUTY_KEYS.forEach(key => {
-        const item = currentShiftObj[key] || { numbersStr: "" };
+        const item = (key === "休假") ? leaveData : (currentShiftObj[key] || { numbersStr: "" });
         const icon = DUTY_ICONS[key] || "fa-shield";
 
         const div = document.createElement("div");
@@ -422,9 +475,9 @@
         div.innerHTML = `
           <label class="block font-bold text-slate-800 text-sm flex items-center gap-2">
             <i class="fa-solid ${icon} text-slate-400 text-xs"></i>
-            <span>${key} (輸入人員號碼)</span>
+            <span>${key} ${key === '休假' ? '(全天休假人員號碼)' : '(輸入人員號碼)'}</span>
           </label>
-          <input type="text" id="input-${key}" value="${item.numbersStr || ''}" placeholder="例如: 1, 18, 8"
+          <input type="text" id="input-${key}" value="${item.numbersStr || ''}" placeholder="例如: 34, 33, 32"
             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-slate-50/50 font-mono font-bold text-slate-700">
         `;
         container.appendChild(div);
@@ -457,7 +510,7 @@
 
         const json = await res.json();
         if (json.status === "success") {
-          alert(`${currentShift} 已成功寫入！`);
+          alert(`資料已成功更新！`);
           await fetchData();
           setViewMode("view");
         } else {
