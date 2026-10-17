@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <!-- 統計數據看板 (直接定點取出 Y 欄 [Col 24] 與 Z 欄 [Col 25]) -->
+      <!-- 統計數據看板 -->
       <div class="grid grid-cols-4 gap-1.5 text-center">
         <div class="bg-amber-50 border border-amber-200/80 p-2 rounded-xl shadow-xs">
           <div class="text-[10px] text-amber-700 font-medium">上班</div>
@@ -275,12 +275,9 @@
       }
     }
 
-    // 極速直接索引定點抓取 (Direct Index Lookup)
     function parseFastData(data) {
       if (!data || data.length === 0) return;
 
-      // 1. 定點取出 Y 欄 (Col 24) 與 Z 欄 (Col 25) 統計數據
-      // 列 1: 上班(19), 列 2: 休假(15), 列 3: 支援(3), 列 4: 總人數(37)
       statsData = {
         work: (data[0] && data[0][24] !== undefined) ? Number(data[0][24]) : 0,
         leave: (data[1] && data[1][24] !== undefined) ? Number(data[1][24]) : 0,
@@ -288,7 +285,6 @@
         total: (data[3] && data[3][24] !== undefined) ? Number(data[3][24]) : 0
       };
 
-      // 2. 解析三班勤務（I~O欄號碼，Q~W欄呈現字串）
       shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
       const duties = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二", "支援"];
       const colMap = {
@@ -302,9 +298,9 @@
       };
 
       const shiftStartRows = {
-        "第一班": 1, // 第 2 列索引為 1 (1~4)
-        "第二班": 9, // 第 10 列索引為 9 (9~12)
-        "第三班": 17 // 第 18 列索引為 17 (17~20)
+        "第一班": 1,
+        "第二班": 9,
+        "第三班": 17
       };
 
       Object.keys(shiftStartRows).forEach(sName => {
@@ -314,13 +310,18 @@
           const { num: numCol, res: resCol } = colMap[duty];
           let rawNums = [];
           let formattedList = [];
+          let shiftDate = "";
 
           for (let r = 0; r < 4; r++) {
             const rIdx = startRow + r;
             if (rIdx < data.length && data[rIdx]) {
               const val = data[rIdx][numCol];
               const resVal = data[rIdx][resCol];
+              const dateVal = data[rIdx][15]; // P欄 (index 15) 存放日期
 
+              if (dateVal && !shiftDate) {
+                shiftDate = String(dateVal).trim();
+              }
               if (val !== "" && val !== undefined && val !== null) {
                 rawNums.push(String(val).trim());
               }
@@ -334,6 +335,7 @@
             numbersStr: rawNums.join(", "),
             formattedList: formattedList
           };
+          shiftData[sName].date = shiftDate;
         });
       });
     }
@@ -411,22 +413,21 @@
 
       shiftsToRender.forEach(sName => {
         const shiftObj = shiftData[sName] || {};
+        const shiftDate = shiftObj.date ? ` (${shiftObj.date})` : "";
         
         const shiftWrapper = document.createElement("div");
         shiftWrapper.className = "bg-white p-2.5 sm:p-3.5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2";
         
-        if (currentShift === "全部") {
-          const shiftHeader = document.createElement("div");
-          shiftHeader.className = "flex items-center justify-between border-b border-slate-100 pb-1.5";
-          shiftHeader.innerHTML = `
-            <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-              ${sName}
-            </span>
-            <button onclick="selectShift('${sName}'); setViewMode('edit');" class="text-[11px] text-blue-600 hover:underline font-semibold">編輯此班</button>
-          `;
-          shiftWrapper.appendChild(shiftHeader);
-        }
+        const shiftHeader = document.createElement("div");
+        shiftHeader.className = "flex items-center justify-between border-b border-slate-100 pb-1.5";
+        shiftHeader.innerHTML = `
+          <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            ${sName}<span class="text-[11px] text-slate-400 font-normal">${shiftDate}</span>
+          </span>
+          <button onclick="selectShift('${sName}'); setViewMode('edit');" class="text-[11px] text-blue-600 hover:underline font-semibold">編輯此班</button>
+        `;
+        shiftWrapper.appendChild(shiftHeader);
 
         const gridDiv = document.createElement("div");
         gridDiv.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5";
