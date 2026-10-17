@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>安漁排班</title>
+  <title>安漁班表</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
     body {
       font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #f8fafc;
+      background-color: #f1f5f9;
       -webkit-tap-highlight-color: transparent;
     }
     .glass-header {
@@ -23,110 +23,136 @@
 <body class="min-h-screen text-slate-800 flex flex-col justify-between">
 
   <!-- 頂部導覽列 -->
-  <header id="appHeader" class="hidden sticky top-0 z-30 bg-white/80 glass-header border-b border-slate-200/80 px-4 py-3 transition-all duration-200">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
-          <i class="fa-solid fa-shield-halved text-lg"></i>
+  <header id="appHeader" class="hidden sticky top-0 z-30 bg-white/90 glass-header border-b border-slate-200 px-3 py-2.5 transition-all duration-200 shadow-xs">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm shadow-blue-500/20">
+          <i class="fa-solid fa-shield-halved text-sm"></i>
         </div>
         <div>
-          <h1 class="font-bold text-slate-900 text-lg leading-tight">安漁班表</h1>
-          <p class="text-xs text-slate-400 font-medium">勤務配置</p>
+          <h1 class="font-bold text-slate-900 text-sm leading-tight">安漁班表</h1>
+          <p class="text-[10px] text-slate-400 font-medium">勤務配置</p>
         </div>
       </div>
-      <div class="flex items-center space-x-2">
-        <button onclick="openPersonnelModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition flex items-center gap-1.5 shadow-sm">
-          <i class="fa-solid fa-users text-xs text-blue-600"></i><span class="hidden sm:inline">人員</span>名冊
+      <div class="flex items-center space-x-1.5">
+        <button onclick="openPersonnelModal()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-medium transition flex items-center gap-1 shadow-xs bg-white">
+          <i class="fa-solid fa-users text-blue-600"></i><span>名冊</span>
         </button>
-        <button onclick="logout()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-sm font-medium transition flex items-center gap-1.5 border border-slate-200">
-          <span>登出</span><i class="fa-solid fa-right-from-bracket text-xs"></i>
+        <button onclick="logout()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-xs font-medium transition flex items-center gap-1 border border-slate-200">
+          <span>登出</span><i class="fa-solid fa-right-from-bracket text-[10px]"></i>
         </button>
       </div>
     </div>
   </header>
 
   <!-- 主內容區 -->
-  <main class="max-w-5xl mx-auto w-full p-4 sm:p-6 flex-1">
+  <main class="max-w-4xl mx-auto w-full p-2 sm:p-4 flex-1 space-y-3">
 
     <!-- 登入頁面 -->
-    <div id="loginSection" class="min-h-[80vh] flex items-center justify-center">
-      <div class="w-full max-w-md bg-white rounded-3xl p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50 text-center space-y-6">
-        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto text-blue-600 border border-blue-100 shadow-sm">
-          <i class="fa-solid fa-lock text-2xl"></i>
+    <div id="loginSection" class="min-h-[85vh] flex items-center justify-center p-2">
+      <div class="w-full max-w-sm bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50 text-center space-y-5">
+        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto text-blue-600 border border-blue-100 shadow-xs">
+          <i class="fa-solid fa-lock text-xl"></i>
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-slate-900">安漁班表</h2>
-          <p class="text-slate-400 text-sm mt-1">請輸入驗證密碼登入</p>
+          <h2 class="text-xl font-bold text-slate-900">安漁班表</h2>
+          <p class="text-slate-400 text-xs mt-1">請輸入驗證密碼登入</p>
         </div>
-        <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
+        <form onsubmit="handleLogin(event)" class="space-y-3.5 text-left">
           <div>
-            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">驗證密碼</label>
+            <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">驗證密碼</label>
             <input type="password" id="passwordInput" placeholder="請輸入密碼" required
-              class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-center text-lg tracking-widest font-semibold text-slate-700 bg-slate-50/50">
+              class="w-full px-3.5 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-center text-base tracking-widest font-semibold text-slate-700 bg-slate-50/50">
           </div>
           <button type="submit" id="loginBtn"
-            class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2">
+            class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2 text-sm">
             <span>進入班表</span>
           </button>
         </form>
-        <p class="text-xs text-slate-400 font-medium">離開頁面會自動登出；切換 App 超過 1 分鐘將安全登出</p>
+        <p class="text-[10px] text-slate-400 leading-relaxed">離開頁面會自動登出；切換 App 超過 1 分鐘將安全登出</p>
       </div>
     </div>
 
     <!-- 主要班表視圖區塊 -->
-    <div id="appSection" class="hidden space-y-6">
+    <div id="appSection" class="hidden space-y-3">
 
-      <!-- 頁籤與工具列 -->
-      <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
-        <!-- 班別選擇 -->
-        <div class="flex bg-slate-100 p-1 rounded-xl gap-1">
-          <button onclick="selectShift('第一班')" id="tab-第一班" class="shift-tab flex-1 sm:flex-initial px-5 py-2 rounded-lg text-sm font-semibold transition">第一班</button>
-          <button onclick="selectShift('第二班')" id="tab-第二班" class="shift-tab flex-1 sm:flex-initial px-5 py-2 rounded-lg text-sm font-semibold transition">第二班</button>
-          <button onclick="selectShift('第三班')" id="tab-第三班" class="shift-tab flex-1 sm:flex-initial px-5 py-2 rounded-lg text-sm font-semibold transition">第三班</button>
+      <!-- 工具列：班別快速切換 + 模式切換與刷新 -->
+      <div class="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col gap-2">
+        <div class="flex items-center justify-between gap-2">
+          <!-- 班別選擇 -->
+          <div class="flex bg-slate-100 p-1 rounded-xl gap-1 flex-1">
+            <button onclick="selectShift('全部')" id="tab-全部" class="shift-tab flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition text-center">三班全覽</button>
+            <button onclick="selectShift('第一班')" id="tab-第一班" class="shift-tab flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition text-center">第一班</button>
+            <button onclick="selectShift('第二班')" id="tab-第二班" class="shift-tab flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition text-center">第二班</button>
+            <button onclick="selectShift('第三班')" id="tab-第三班" class="shift-tab flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition text-center">第三班</button>
+          </div>
+          <!-- 重新整理 -->
+          <button onclick="fetchData()" id="refreshBtn" title="重新整理" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100 transition shadow-xs bg-white">
+            <i class="fa-solid fa-arrows-rotate text-xs"></i>
+          </button>
         </div>
 
-        <!-- 模式切換與刷新 -->
-        <div class="flex items-center justify-end gap-2">
-          <div class="bg-slate-100 p-1 rounded-xl flex">
-            <button onclick="setViewMode('view')" id="mode-view" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+        <div class="flex items-center justify-between pt-1 border-t border-slate-100 px-1">
+          <span id="currentShiftTitle" class="font-bold text-slate-800 text-sm">三班全覽</span>
+          <!-- 模式切換 -->
+          <div class="bg-slate-100 p-0.5 rounded-lg flex">
+            <button onclick="setViewMode('view')" id="mode-view" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1 transition">
               <i class="fa-regular fa-eye"></i> 班表
             </button>
-            <button onclick="setViewMode('edit')" id="mode-edit" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+            <button onclick="setViewMode('edit')" id="mode-edit" class="px-3 py-1 rounded-md text-xs font-semibold flex items-center gap-1 transition">
               <i class="fa-solid fa-pen"></i> 編輯
             </button>
           </div>
-          <button onclick="fetchData()" id="refreshBtn" title="重新整理" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100 transition shadow-sm">
-            <i class="fa-solid fa-arrows-rotate text-sm"></i>
-          </button>
         </div>
       </div>
 
-      <!-- 標題資訊 -->
-      <div class="flex items-center justify-between px-1">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">CURRENT SHIFT</span>
-          <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <span id="currentShiftTitle">第一班</span>
-            <span id="modeBadge" class="text-xs font-normal px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-600">勤務配置</span>
-          </h2>
+      <!-- 統計數據看板 (直接定點取出 Y 欄 [Col 24] 與 Z 欄 [Col 25]) -->
+      <div class="grid grid-cols-4 gap-1.5 text-center">
+        <div class="bg-amber-50 border border-amber-200/80 p-2 rounded-xl shadow-xs">
+          <div class="text-[10px] text-amber-700 font-medium">上班</div>
+          <div id="stat-work" class="text-sm font-bold text-amber-800 mt-0.5">-</div>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200/80 p-2 rounded-xl shadow-xs">
+          <div class="text-[10px] text-emerald-700 font-medium">休假</div>
+          <div id="stat-leave" class="text-sm font-bold text-emerald-800 mt-0.5">-</div>
+        </div>
+        <div class="bg-blue-50 border border-blue-200/80 p-2 rounded-xl shadow-xs">
+          <div class="text-[10px] text-blue-700 font-medium">支援/其他</div>
+          <div id="stat-support" class="text-sm font-bold text-blue-800 mt-0.5">-</div>
+        </div>
+        <div class="bg-slate-100 border border-slate-200 p-2 rounded-xl shadow-xs">
+          <div class="text-[10px] text-slate-600 font-medium">總人數</div>
+          <div id="stat-total" class="text-sm font-bold text-slate-800 mt-0.5">-</div>
         </div>
       </div>
 
       <!-- 班表卡片檢視 (View Mode) -->
-      <div id="viewContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="viewContainer" class="space-y-3">
         <!-- 由 JS 動態繪製 -->
       </div>
 
       <!-- 編輯模式容器 (Edit Mode) -->
-      <div id="editContainer" class="hidden space-y-4">
-        <form onsubmit="handleSaveDuties(event)" class="space-y-4">
-          <div id="editFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div id="editContainer" class="hidden space-y-3">
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-2xl shadow-xs space-y-3">
+          <div class="flex items-center justify-between text-xs text-amber-900 font-medium">
+            <span>編輯班別：<strong id="editShiftNameLabel" class="underline">第一班</strong></span>
+            <span class="text-amber-700">（修改需驗證密碼）</span>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-[11px] font-bold text-amber-800">請輸入密碼</label>
+            <input type="password" id="editAuthPassword" placeholder="請輸入密碼" 
+              class="w-full px-3 py-2 rounded-xl border border-amber-300 text-xs focus:border-amber-500 focus:ring-2 focus:ring-amber-200 bg-white font-mono font-bold text-slate-800">
+          </div>
+        </div>
+
+        <form onsubmit="handleSaveDuties(event)" class="space-y-3">
+          <div id="editFields" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <!-- 由 JS 動態產生輸入框 -->
           </div>
-          <div class="flex justify-end pt-2">
-            <button type="submit" id="saveBtn" class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2">
+          <div class="pt-1">
+            <button type="submit" id="saveBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2 text-sm">
               <i class="fa-solid fa-floppy-disk"></i>
-              <span>儲存變更</span>
+              <span>確認儲存變更</span>
             </button>
           </div>
         </form>
@@ -136,20 +162,20 @@
   </main>
 
   <!-- 人員名冊 Modal -->
-  <div id="personnelModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 glass-header flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-3xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-        <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+  <div id="personnelModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 glass-header flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
           <i class="fa-solid fa-address-book text-blue-600"></i> 人員名冊
         </h3>
-        <button onclick="closePersonnelModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100 transition">
-          <i class="fa-solid fa-xmark text-lg"></i>
+        <button onclick="closePersonnelModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200/50 transition">
+          <i class="fa-solid fa-xmark text-base"></i>
         </button>
       </div>
-      <div class="p-4 bg-slate-50/50 border-b border-slate-100">
-        <input type="text" id="personnelSearch" oninput="filterPersonnel()" placeholder="搜尋號碼、姓名或階級..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white">
+      <div class="p-3 bg-white border-b border-slate-100">
+        <input type="text" id="personnelSearch" oninput="filterPersonnel()" placeholder="搜尋號碼、姓名或階級..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-slate-50/50">
       </div>
-      <div class="p-4 overflow-y-auto flex-1 divide-y divide-slate-100" id="personnelList">
+      <div class="p-3 overflow-y-auto flex-1 divide-y divide-slate-100" id="personnelList">
         <!-- 名冊動態寫入 -->
       </div>
     </div>
@@ -158,7 +184,7 @@
   <script>
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw0Jh6kECVnbizPWeWg_IjthIjxMfE7jV06fQKxTOgjHnag_gr7wx5ZBaInuIMnCV1i/exec";
 
-    const DUTY_KEYS = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二", "休假"];
+    const DUTY_KEYS = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二", "支援"];
     const DUTY_ICONS = {
       "值班": "fa-shield-halved",
       "檢查": "fa-list-check",
@@ -166,16 +192,16 @@
       "巡邏": "fa-person-walking",
       "備勤": "fa-clock",
       "檢查二": "fa-file-signature",
-      "休假": "fa-bed"
+      "支援": "fa-handshake-angle"
     };
 
-    let currentShift = "第一班";
+    let currentShift = "全部"; 
     let viewMode = "view"; 
     let currentPassword = "";
     let rawSheetData = [];
     let personnelList = [];
     let shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
-    let leaveData = { numbersStr: "", rawNums: [], formattedList: [] }; 
+    let statsData = { work: 0, leave: 0, support: 0, total: 0 };
     let backgroundTimer = null;
 
     window.addEventListener("load", () => {
@@ -207,7 +233,7 @@
         document.getElementById("loginSection").classList.add("hidden");
         document.getElementById("appHeader").classList.remove("hidden");
         document.getElementById("appSection").classList.remove("hidden");
-        selectShift("第一班");
+        selectShift("全部");
       }
     }
 
@@ -215,7 +241,6 @@
       currentPassword = "";
       rawSheetData = [];
       shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
-      leaveData = { numbersStr: "", rawNums: [], formattedList: [] };
       document.getElementById("loginSection").classList.remove("hidden");
       document.getElementById("appHeader").classList.add("hidden");
       document.getElementById("appSection").classList.add("hidden");
@@ -239,7 +264,7 @@
         rawSheetData = json.rawData || [];
         personnelList = json.personnel || [];
 
-        parseRawData(rawSheetData);
+        parseFastData(rawSheetData);
         renderAll();
         return true;
       } catch (err) {
@@ -250,55 +275,48 @@
       }
     }
 
-    function parseRawData(data) {
+    // 極速直接索引定點抓取 (Direct Index Lookup)
+    function parseFastData(data) {
       if (!data || data.length === 0) return;
 
-      shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
-      const headerRow = data[0] || [];
-      const targetDuties = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二"];
-      
-      let dutyCols = {};   
-      let resultCols = {}; 
-
-      targetDuties.forEach(dName => {
-        let matchedIndices = [];
-        headerRow.forEach((hText, colIdx) => {
-          if (String(hText).trim() === dName) {
-            matchedIndices.push(colIdx);
-          }
-        });
-
-        if (matchedIndices.length >= 2) {
-          dutyCols[dName] = matchedIndices[0];   
-          resultCols[dName] = matchedIndices[1]; 
-        } else if (matchedIndices.length === 1) {
-          dutyCols[dName] = matchedIndices[0];
-          resultCols[dName] = matchedIndices[0] + 7;
-        } else {
-          const fallbackMap = { "值班": 8, "檢查": 9, "守望": 10, "巡邏": 11, "備勤": 12, "檢查二": 13 };
-          dutyCols[dName] = fallbackMap[dName];
-          resultCols[dName] = fallbackMap[dName] + 7;
-        }
-      });
-
-      const shiftRowStartMap = {
-        "第一班": 1, 
-        "第二班": 9, 
-        "第三班": 17 
+      // 1. 定點取出 Y 欄 (Col 24) 與 Z 欄 (Col 25) 統計數據
+      // 列 1: 上班(19), 列 2: 休假(15), 列 3: 支援(3), 列 4: 總人數(37)
+      statsData = {
+        work: (data[0] && data[0][24] !== undefined) ? Number(data[0][24]) : 0,
+        leave: (data[1] && data[1][24] !== undefined) ? Number(data[1][24]) : 0,
+        support: (data[2] && data[2][24] !== undefined) ? Number(data[2][24]) : 0,
+        total: (data[3] && data[3][24] !== undefined) ? Number(data[3][24]) : 0
       };
 
-      Object.keys(shiftRowStartMap).forEach(sName => {
-        const startRowIndex = shiftRowStartMap[sName];
+      // 2. 解析三班勤務（I~O欄號碼，Q~W欄呈現字串）
+      shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
+      const duties = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二", "支援"];
+      const colMap = {
+        "值班": { num: 8, res: 16 },
+        "檢查": { num: 9, res: 17 },
+        "守望": { num: 10, res: 18 },
+        "巡邏": { num: 11, res: 19 },
+        "備勤": { num: 12, res: 20 },
+        "檢查二": { num: 13, res: 21 },
+        "支援": { num: 14, res: 22 }
+      };
 
-        targetDuties.forEach(key => {
-          const numCol = dutyCols[key];
-          const resCol = resultCols[key];
+      const shiftStartRows = {
+        "第一班": 1, // 第 2 列索引為 1 (1~4)
+        "第二班": 9, // 第 10 列索引為 9 (9~12)
+        "第三班": 17 // 第 18 列索引為 17 (17~20)
+      };
 
+      Object.keys(shiftStartRows).forEach(sName => {
+        const startRow = shiftStartRows[sName];
+
+        duties.forEach(duty => {
+          const { num: numCol, res: resCol } = colMap[duty];
           let rawNums = [];
           let formattedList = [];
 
-          for (let r = 0; r < 4; r++) { 
-            const rIdx = startRowIndex + r;
+          for (let r = 0; r < 4; r++) {
+            const rIdx = startRow + r;
             if (rIdx < data.length && data[rIdx]) {
               const val = data[rIdx][numCol];
               const resVal = data[rIdx][resCol];
@@ -312,53 +330,18 @@
             }
           }
 
-          shiftData[sName][key] = {
+          shiftData[sName][duty] = {
             numbersStr: rawNums.join(", "),
-            rawNums: rawNums,
             formattedList: formattedList
           };
         });
       });
-
-      let leaveCol = -1;
-      let leaveResultCol = -1;
-      headerRow.forEach((hText, colIdx) => {
-        if (String(hText).trim().includes("休假")) {
-          if (leaveCol === -1) leaveCol = colIdx;
-          else if (leaveResultCol === -1) leaveResultCol = colIdx;
-        }
-      });
-
-      if (leaveCol === -1) leaveCol = 22; 
-      if (leaveResultCol === -1) leaveResultCol = 23; 
-
-      let leaveRawNums = [];
-      let leaveFormattedList = [];
-      for (let r = 1; r < Math.min(35, data.length); r++) {
-        if (data[r]) {
-          const val = data[r][leaveCol];  
-          const resVal = data[r][leaveResultCol]; 
-
-          if (val !== "" && val !== undefined && val !== null) {
-            leaveRawNums.push(String(val).trim());
-          }
-          if (resVal !== "" && resVal !== undefined && resVal !== null) {
-            leaveFormattedList.push(String(resVal).trim());
-          }
-        }
-      }
-
-      leaveData = {
-        numbersStr: leaveRawNums.join(", "),
-        rawNums: leaveRawNums,
-        formattedList: leaveFormattedList
-      };
     }
 
     function selectShift(shiftName) {
       currentShift = shiftName;
       document.querySelectorAll(".shift-tab").forEach(tab => {
-        tab.classList.remove("bg-blue-600", "text-white", "shadow-md");
+        tab.classList.remove("bg-blue-600", "text-white", "shadow-sm");
         tab.classList.add("text-slate-600", "hover:bg-slate-200/60");
       });
       const activeTab = document.getElementById(`tab-${shiftName}`);
@@ -366,7 +349,20 @@
         activeTab.classList.remove("text-slate-600", "hover:bg-slate-200/60");
         activeTab.classList.add("bg-blue-600", "text-white", "shadow-md");
       }
-      document.getElementById("currentShiftTitle").innerText = shiftName;
+      
+      const titleEl = document.getElementById("currentShiftTitle");
+      if (titleEl) {
+        titleEl.innerText = shiftName === '全部' ? '三班全覽' : shiftName;
+      }
+
+      if (viewMode === 'edit' && shiftName === '全部') {
+        currentShift = '第一班';
+        selectShift('第一班');
+        return;
+      }
+      const editLabel = document.getElementById("editShiftNameLabel");
+      if (editLabel) editLabel.innerText = currentShift;
+
       renderAll();
     }
 
@@ -374,25 +370,32 @@
       viewMode = mode;
       const vBtn = document.getElementById("mode-view");
       const eBtn = document.getElementById("mode-edit");
-      const badge = document.getElementById("modeBadge");
 
       if (mode === "view") {
-        vBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm";
-        eBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-800";
+        vBtn.className = "px-3 py-1 rounded-md text-xs font-semibold bg-white text-slate-800 shadow-xs";
+        eBtn.className = "px-3 py-1 rounded-md text-xs font-semibold text-slate-500 hover:text-slate-800";
         document.getElementById("viewContainer").classList.remove("hidden");
         document.getElementById("editContainer").classList.add("hidden");
-        if (badge) badge.innerText = "勤務配置";
       } else {
-        eBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-800 shadow-sm";
-        vBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-800";
+        eBtn.className = "px-3 py-1 rounded-md text-xs font-semibold bg-white text-slate-800 shadow-xs";
+        vBtn.className = "px-3 py-1 rounded-md text-xs font-semibold text-slate-500 hover:text-slate-800";
         document.getElementById("viewContainer").classList.add("hidden");
         document.getElementById("editContainer").classList.remove("hidden");
-        if (badge) badge.innerText = "編輯號碼";
+        if (currentShift === "全部") {
+          currentShift = "第一班";
+          selectShift("第一班");
+          return;
+        }
       }
       renderAll();
     }
 
     function renderAll() {
+      document.getElementById("stat-work").innerText = statsData.work;
+      document.getElementById("stat-leave").innerText = statsData.leave;
+      document.getElementById("stat-support").innerText = statsData.support;
+      document.getElementById("stat-total").innerText = statsData.total;
+
       if (viewMode === "view") {
         renderViewCards();
       } else {
@@ -403,47 +406,82 @@
     function renderViewCards() {
       const container = document.getElementById("viewContainer");
       container.innerHTML = "";
-      const currentShiftObj = shiftData[currentShift] || {};
 
-      DUTY_KEYS.forEach(key => {
-        const item = (key === "休假") ? leaveData : (currentShiftObj[key] || { formattedList: [] });
-        const icon = DUTY_ICONS[key] || "fa-shield";
-        const count = item.formattedList ? item.formattedList.length : 0;
+      const shiftsToRender = currentShift === "全部" ? ["第一班", "第二班", "第三班"] : [currentShift];
 
-        let listHtml = "";
-        if (item.formattedList && item.formattedList.length > 0) {
-          listHtml = item.formattedList.map(text => {
+      shiftsToRender.forEach(sName => {
+        const shiftObj = shiftData[sName] || {};
+        
+        const shiftWrapper = document.createElement("div");
+        shiftWrapper.className = "bg-white p-2.5 sm:p-3.5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2";
+        
+        if (currentShift === "全部") {
+          const shiftHeader = document.createElement("div");
+          shiftHeader.className = "flex items-center justify-between border-b border-slate-100 pb-1.5";
+          shiftHeader.innerHTML = `
+            <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              ${sName}
+            </span>
+            <button onclick="selectShift('${sName}'); setViewMode('edit');" class="text-[11px] text-blue-600 hover:underline font-semibold">編輯此班</button>
+          `;
+          shiftWrapper.appendChild(shiftHeader);
+        }
+
+        const gridDiv = document.createElement("div");
+        gridDiv.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5";
+
+        let activeDutyCount = 0;
+
+        DUTY_KEYS.forEach(key => {
+          const item = shiftObj[key] || { formattedList: [] };
+          const count = item.formattedList ? item.formattedList.length : 0;
+
+          if (count === 0) return;
+
+          activeDutyCount++;
+          const icon = DUTY_ICONS[key] || "fa-shield";
+
+          let listHtml = item.formattedList.map(text => {
             const parts = text.split("-");
             let num = parts[0] || "";
             let info = parts.slice(1).join(" ") || text;
             return `
-              <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-mono font-bold text-xs flex items-center justify-center mr-2 shadow-sm">${num}</span>
-                <span class="text-xs font-bold text-slate-700 flex-1">${info}</span>
+              <div class="flex items-center justify-between p-1 rounded bg-slate-50 border border-slate-100 text-[11px]">
+                <span class="w-4 h-4 rounded bg-blue-100 text-blue-700 font-mono font-bold flex items-center justify-center mr-1 text-[10px]">${num}</span>
+                <span class="font-bold text-slate-700 truncate">${info}</span>
               </div>
             `;
           }).join("");
+
+          const card = document.createElement("div");
+          card.className = "bg-slate-50/70 p-2 rounded-xl border border-slate-200/60 space-y-1 flex flex-col justify-between";
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[11px] font-bold text-slate-800 flex items-center gap-1">
+                  <i class="fa-solid ${icon} text-blue-600 text-[9px]"></i> ${key}
+                </span>
+                <span class="text-[9px] px-1 py-0.2 rounded bg-blue-50 text-blue-600 font-semibold">${count}人</span>
+              </div>
+              <div class="space-y-0.5">
+                ${listHtml}
+              </div>
+            </div>
+          `;
+          gridDiv.appendChild(card);
+        });
+
+        if (activeDutyCount === 0) {
+          const emptyNotice = document.createElement("div");
+          emptyNotice.className = "py-4 text-center text-xs text-slate-400 font-medium";
+          emptyNotice.innerText = "此班目前尚未排定任何勤務";
+          shiftWrapper.appendChild(emptyNotice);
         } else {
-          listHtml = `<div class="py-6 text-center text-xs text-slate-300 font-medium">未排定人員</div>`;
+          shiftWrapper.appendChild(gridDiv);
         }
 
-        const card = document.createElement("div");
-        card.className = "bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition space-y-3";
-        card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm border border-blue-100">
-                <i class="fa-solid ${icon}"></i>
-              </div>
-              <h3 class="font-bold text-slate-800 text-base">${key} ${key === '休假' ? '<span class="text-xs text-slate-400 font-normal">(全天)</span>' : ''}</h3>
-            </div>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${count > 0 ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-slate-100 text-slate-400'}">${count} 人</span>
-          </div>
-          <div class="space-y-1.5 pt-1">
-            ${listHtml}
-          </div>
-        `;
-        container.appendChild(card);
+        container.appendChild(shiftWrapper);
       });
     }
 
@@ -453,18 +491,18 @@
       const currentShiftObj = shiftData[currentShift] || {};
 
       DUTY_KEYS.forEach(key => {
-        const item = (key === "休假") ? leaveData : (currentShiftObj[key] || { numbersStr: "" });
+        const item = currentShiftObj[key] || { numbersStr: "" };
         const icon = DUTY_ICONS[key] || "fa-shield";
 
         const div = document.createElement("div");
-        div.className = "bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-2";
+        div.className = "bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs space-y-1.5";
         div.innerHTML = `
-          <label class="block font-bold text-slate-800 text-sm flex items-center gap-2">
+          <label class="block font-bold text-slate-800 text-xs flex items-center gap-1.5">
             <i class="fa-solid ${icon} text-slate-400 text-xs"></i>
-            <span>${key} ${key === '休假' ? '(全天休假號碼)' : '(輸入人員號碼)'}</span>
+            <span>${key} (輸入號碼)</span>
           </label>
           <input type="text" id="input-${key}" value="${item.numbersStr || ''}" placeholder="如: 9, 1, 31"
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-slate-50/50 font-mono font-bold text-slate-700">
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-slate-50/50 font-mono font-bold text-slate-700">
         `;
         container.appendChild(div);
       });
@@ -472,6 +510,12 @@
 
     async function handleSaveDuties(e) {
       e.preventDefault();
+
+      const authPwd = document.getElementById("editAuthPassword").value.trim();
+      if (!authPwd) {
+        alert("請輸入密碼！");
+        return;
+      }
 
       const dutiesPayload = {};
       DUTY_KEYS.forEach(key => {
@@ -488,7 +532,7 @@
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
-            password: currentPassword,
+            password: authPwd, 
             shiftName: currentShift,
             duties: dutiesPayload
           })
@@ -497,16 +541,17 @@
         const json = await res.json();
         if (json.status === "success") {
           alert(`資料已成功更新！`);
+          document.getElementById("editAuthPassword").value = ""; 
           await fetchData();
           setViewMode("view");
         } else {
-          alert("寫入失敗：" + (json.message || "未知錯誤"));
+          alert("寫入失敗：" + (json.message || "密碼錯誤或權限不足"));
         }
       } catch (err) {
         alert("寫入請求失敗：" + err.toString());
       } finally {
         saveBtn.disabled = false;
-        saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>儲存變更</span>`;
+        saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>確認儲存變更</span>`;
       }
     }
 
@@ -527,12 +572,12 @@
       }
 
       container.innerHTML = list.map(p => `
-        <div class="py-2.5 flex items-center justify-between text-sm">
-          <div class="flex items-center space-x-3">
-            <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 font-mono font-bold flex items-center justify-center text-xs">${p.number}</span>
+        <div class="py-2.5 flex items-center justify-between text-xs sm:text-sm">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 font-mono font-bold flex items-center justify-center text-xs">${p.number}</span>
             <span class="font-bold text-slate-800">${p.name}</span>
           </div>
-          <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600">${p.rank}</span>
+          <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">${p.rank}</span>
         </div>
       `).join("");
     }
