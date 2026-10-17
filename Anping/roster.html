@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>安漁班表</title>
+  <title>安漁排班</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
     body {
       font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #f1f5f9;
+      background-color: #f8fafc;
       -webkit-tap-highlight-color: transparent;
     }
-    .blur-backdrop {
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .glass-header {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     input:focus, button:focus { outline: none; }
   </style>
@@ -23,25 +23,22 @@
 <body class="min-h-screen text-slate-800 flex flex-col justify-between">
 
   <!-- 頂部導覽列 -->
-  <header id="appHeader" class="hidden sticky top-0 z-30 bg-white/90 blur-backdrop border-b border-slate-200/80 px-4 py-3 transition-all duration-200">
+  <header id="appHeader" class="hidden sticky top-0 z-30 bg-white/80 glass-header border-b border-slate-200/80 px-4 py-3 transition-all duration-200">
     <div class="max-w-5xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100 shadow-sm">
+        <div class="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
           <i class="fa-solid fa-shield-halved text-lg"></i>
         </div>
         <div>
-          <h1 class="font-bold text-slate-800 text-lg leading-tight">安漁班表</h1>
-          <p class="text-xs text-slate-400 font-medium">勤務人員</p>
+          <h1 class="font-bold text-slate-900 text-lg leading-tight">安漁班表</h1>
+          <p class="text-xs text-slate-400 font-medium">勤務配置</p>
         </div>
       </div>
       <div class="flex items-center space-x-2">
-        <span id="connStatus" class="hidden md:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-600 border border-emerald-200">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>已連線
-        </span>
-        <button onclick="openPersonnelModal()" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition flex items-center gap-1.5">
-          <i class="fa-solid fa-users text-xs"></i><span class="hidden sm:inline">人員</span>名冊
+        <button onclick="openPersonnelModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-users text-xs text-blue-600"></i><span class="hidden sm:inline">人員</span>名冊
         </button>
-        <button onclick="logout()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-sm font-medium transition flex items-center gap-1.5 border border-slate-200">
+        <button onclick="logout()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-sm font-medium transition flex items-center gap-1.5 border border-slate-200">
           <span>登出</span><i class="fa-solid fa-right-from-bracket text-xs"></i>
         </button>
       </div>
@@ -58,8 +55,8 @@
           <i class="fa-solid fa-lock text-2xl"></i>
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-slate-800">安漁班表</h2>
-          <p class="text-slate-400 text-sm mt-1">勤務人員</p>
+          <h2 class="text-2xl font-bold text-slate-900">安漁班表</h2>
+          <p class="text-slate-400 text-sm mt-1">請輸入驗證密碼登入</p>
         </div>
         <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
           <div>
@@ -72,7 +69,7 @@
             <span>進入班表</span>
           </button>
         </form>
-        <p class="text-xs text-slate-400 font-medium">離開頁面會清除登入狀態；切換其他 App 超過 1 分鐘會自動登出</p>
+        <p class="text-xs text-slate-400 font-medium">離開頁面會自動登出；切換 App 超過 1 分鐘將安全登出</p>
       </div>
     </div>
 
@@ -98,13 +95,13 @@
               <i class="fa-solid fa-pen"></i> 編輯
             </button>
           </div>
-          <button onclick="fetchData()" id="refreshBtn" title="重新整理" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100 transition">
+          <button onclick="fetchData()" id="refreshBtn" title="重新整理" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100 transition shadow-sm">
             <i class="fa-solid fa-arrows-rotate text-sm"></i>
           </button>
         </div>
       </div>
 
-      <!-- 標題與來源資訊 -->
+      <!-- 標題資訊 -->
       <div class="flex items-center justify-between px-1">
         <div>
           <span class="text-xs font-bold uppercase tracking-wider text-blue-600">CURRENT SHIFT</span>
@@ -112,9 +109,6 @@
             <span id="currentShiftTitle">第一班</span>
             <span id="modeBadge" class="text-xs font-normal px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-600">勤務配置</span>
           </h2>
-        </div>
-        <div class="text-xs text-slate-400 font-medium">
-          資料來源：不能說的秘密
         </div>
       </div>
 
@@ -132,7 +126,7 @@
           <div class="flex justify-end pt-2">
             <button type="submit" id="saveBtn" class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-floppy-disk"></i>
-              <span>儲存</span>
+              <span>儲存變更</span>
             </button>
           </div>
         </form>
@@ -142,7 +136,7 @@
   </main>
 
   <!-- 人員名冊 Modal -->
-  <div id="personnelModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 blur-backdrop flex items-center justify-center p-4">
+  <div id="personnelModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 glass-header flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
       <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
         <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
@@ -152,7 +146,7 @@
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
-      <div class="p-4 bg-slate-50/50">
+      <div class="p-4 bg-slate-50/50 border-b border-slate-100">
         <input type="text" id="personnelSearch" oninput="filterPersonnel()" placeholder="搜尋號碼、姓名或階級..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white">
       </div>
       <div class="p-4 overflow-y-auto flex-1 divide-y divide-slate-100" id="personnelList">
@@ -256,18 +250,15 @@
       }
     }
 
-    // 自動動態定位試算表欄位！
     function parseRawData(data) {
       if (!data || data.length === 0) return;
 
       shiftData = { "第一班": {}, "第二班": {}, "第三班": {} };
-
-      // 1. 動態掃描第 1 列 (標題列)，找出「數字欄」與「姓名結果欄」的真實 Index
       const headerRow = data[0] || [];
-      
       const targetDuties = ["值班", "檢查", "守望", "巡邏", "備勤", "檢查二"];
-      let dutyCols = {};   // 存放輸入號碼欄索引
-      let resultCols = {}; // 存放對應姓名結果欄索引
+      
+      let dutyCols = {};   
+      let resultCols = {}; 
 
       targetDuties.forEach(dName => {
         let matchedIndices = [];
@@ -278,28 +269,24 @@
         });
 
         if (matchedIndices.length >= 2) {
-          dutyCols[dName] = matchedIndices[0];   // 第一次出現的是號碼欄 (如 G 欄)
-          resultCols[dName] = matchedIndices[1]; // 第二次出現的是姓名結果欄 (如 M 欄)
+          dutyCols[dName] = matchedIndices[0];   
+          resultCols[dName] = matchedIndices[1]; 
         } else if (matchedIndices.length === 1) {
-          // 如果只有一欄，預設 offset 6 欄為結果欄
           dutyCols[dName] = matchedIndices[0];
-          resultCols[dName] = matchedIndices[0] + 6;
+          resultCols[dName] = matchedIndices[0] + 7;
         } else {
-          // 安全預設 (G~L 為 6~11, M~R 為 12~17)
-          const fallbackMap = { "值班": 6, "檢查": 7, "守望": 8, "巡邏": 9, "備勤": 10, "檢查二": 11 };
+          const fallbackMap = { "值班": 8, "檢查": 9, "守望": 10, "巡邏": 11, "備勤": 12, "檢查二": 13 };
           dutyCols[dName] = fallbackMap[dName];
-          resultCols[dName] = fallbackMap[dName] + 6;
+          resultCols[dName] = fallbackMap[dName] + 7;
         }
       });
 
-      // 2. 班別起始列 (0-based)
       const shiftRowStartMap = {
         "第一班": 1, 
-        "第二班": 7, 
-        "第三班": 13 
+        "第二班": 9, 
+        "第三班": 17 
       };
 
-      // 3. 讀取並填入班別資料
       Object.keys(shiftRowStartMap).forEach(sName => {
         const startRowIndex = shiftRowStartMap[sName];
 
@@ -310,7 +297,7 @@
           let rawNums = [];
           let formattedList = [];
 
-          for (let r = 0; r < 5; r++) {
+          for (let r = 0; r < 4; r++) { 
             const rIdx = startRowIndex + r;
             if (rIdx < data.length && data[rIdx]) {
               const val = data[rIdx][numCol];
@@ -333,7 +320,6 @@
         });
       });
 
-      // 4. 自動尋找休假欄位 (標題包含 "休假")
       let leaveCol = -1;
       let leaveResultCol = -1;
       headerRow.forEach((hText, colIdx) => {
@@ -343,12 +329,12 @@
         }
       });
 
-      if (leaveCol === -1) leaveCol = 20; // U 欄預設
-      if (leaveResultCol === -1) leaveResultCol = leaveCol + 1; // V 欄預設
+      if (leaveCol === -1) leaveCol = 22; 
+      if (leaveResultCol === -1) leaveResultCol = 23; 
 
       let leaveRawNums = [];
       let leaveFormattedList = [];
-      for (let r = 1; r < Math.min(25, data.length); r++) {
+      for (let r = 1; r < Math.min(35, data.length); r++) {
         if (data[r]) {
           const val = data[r][leaveCol];  
           const resVal = data[r][leaveResultCol]; 
@@ -475,9 +461,9 @@
         div.innerHTML = `
           <label class="block font-bold text-slate-800 text-sm flex items-center gap-2">
             <i class="fa-solid ${icon} text-slate-400 text-xs"></i>
-            <span>${key} ${key === '休假' ? '(全天休假人員號碼)' : '(輸入人員號碼)'}</span>
+            <span>${key} ${key === '休假' ? '(全天休假號碼)' : '(輸入人員號碼)'}</span>
           </label>
-          <input type="text" id="input-${key}" value="${item.numbersStr || ''}" placeholder="例如: 34, 33, 32"
+          <input type="text" id="input-${key}" value="${item.numbersStr || ''}" placeholder="如: 9, 1, 31"
             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-slate-50/50 font-mono font-bold text-slate-700">
         `;
         container.appendChild(div);
@@ -520,7 +506,7 @@
         alert("寫入請求失敗：" + err.toString());
       } finally {
         saveBtn.disabled = false;
-        saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>儲存</span>`;
+        saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>儲存變更</span>`;
       }
     }
 
